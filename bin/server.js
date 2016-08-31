@@ -5,6 +5,8 @@ const debug = require('debug')('nusync_server:server');
 const http = require('http');
 const mongo = require('mongojs');
 const db = mongo('mongodb://localhost/gitsee', ['repos']);
+const schedule = require('node-schedule');
+const blast = require('./schedule');
 
 const port = '1234';
 app.set('port', port);
@@ -40,6 +42,7 @@ function onError(error) {
 }
 
 function onListening() {
+  blast();
   const date = new Date(),
     time = ((date.getHours() > 12)
       ? date.getHours() - 12
