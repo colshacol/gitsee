@@ -1,0 +1,164 @@
+row(x, y)
+  display flex
+  flex-direction row
+
+  if x == center
+    justify-content center
+  else if x == start
+    justify-content flex-start
+  else if x == end
+    justify-content flex-end
+  else if x == stretch
+    justify-content stretch
+  else if x == around
+    justify-content space-around
+  else if x == between
+    justify-content space-between
+
+  if y == center
+    align-items center
+  else if y == start
+    align-items flex-start
+  else if y == end
+    align-items flex-end
+  else if y == stretch
+    align-items stretch
+  else if y == base
+    align-items baseline
+
+/* Stack children vertically. */
+column(x, y)
+  display flex
+  flex-direction column
+
+  if x == center
+    align-items center
+  else if x == start
+    align-items flex-start
+  else if x == end
+    align-items flex-end
+  else if x == stretch
+    align-items stretch
+  else if x == base
+    align-items baseline
+
+  if y == center
+    justify-content center
+  else if y == start
+    justify-content flex-start
+  else if y == end
+    justify-content flex-end
+  else if y == stretch
+    justify-content stretch
+  else if y == around
+    justify-content space-around
+  else if y == between
+    justify-content space-between
+
+wrap()
+  flex-wrap wrap
+
+nowrap()
+  flex-wrap nowrap
+
+
+span-0()
+  display none
+
+span-1()
+    flex-basis 8.33333%
+    max-width 8.33333%
+    width 8.33333%
+
+span-2()
+  flex-basis 16.66667%
+  max-width 16.66667%
+  width 16.66667%
+
+span-3()
+  flex-basis 25%
+  max-width 25%
+  width 25%
+
+span-4()
+  flex-basis 33.33333%
+  max-width 33.33333%
+  width 33.33333%
+
+span-5()
+  flex-basis 41.66667%
+  max-width 41.66667%
+  width 41.66667%
+
+span-6()
+  flex-basis 50%
+  max-width 50%
+  width 50%
+
+span-7()
+  flex-basis 58.33333%
+  max-width 58.33333%
+  width 58.33333%
+
+span-8()
+  flex-basis 66.66667%
+  max-width 66.66667%
+  width 66.66667%
+
+span-9()
+  flex-basis 75%
+  max-width 75%
+  width 75%
+
+span-10()
+  flex-basis 83.33333%
+  max-width 83.33333%
+  width 83.33333%
+
+span-11()
+  flex-basis 91.66667%
+  max-width 91.66667%
+  width 91.66667%
+
+span-12()
+  flex-basis 100%
+  max-width 100%
+  width 100%
+
+off-1()
+  margin-left 8.33333%
+
+off-2()
+  margin-left 16.66667%
+
+off-3()
+  margin-left 25%
+
+off-4()
+  margin-left 33.33333%
+
+off-5()
+  margin-left 41.66667%
+
+off-6()
+  margin-left 50%
+
+off-7()
+  margin-left 58.33333%
+
+off-8()
+  margin-left 66.66667%
+
+off-9()
+  margin-left 75%
+
+off-10()
+  margin-left 83.33333%
+
+off-11()
+  margin-left 91.66667%
+
+contain(width, max-width)
+  width width
+  if max-width
+    max-width max-width

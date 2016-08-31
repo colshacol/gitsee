@@ -1,0 +1,91 @@
+BLACK = #343434
+WHITE = #FFFFFF
+SMOKE = #f4f3f0
+GRAY = #e6e5e0
+RED = #ee6059
+
+GREEN1 = #43f79d
+GREEN2 = #38d184
+WHITE = #FFFFFF
+SMOKE = #f4f3f0
+PURPLE1 = #9370db
+PURPLE2 = #483d8b
+
+OPEN = 'Open Sans', sans-serif
+
+// Create a flex column and specify
+// the alignment and justification of children.
+column(x, y)
+  display flex
+  flex-direction column
+
+  if x == center
+    align-items x
+  else if x == stretch
+    align-items x
+  else if x == baseline
+    align-items x
+  else if x == start
+    align-items flex-start
+  else if x == end
+    align-items flex-end
+
+  if y == center
+    justify-content y
+  else if y == stretch
+    justify-content y
+  else if y == between
+    justify-content space-between
+  else if y == around
+    justify-content space-around
+  else if y == start
+    justify-content flex-start
+  else if y == end
+    justify-content flex-end
+
+
+// Create a flex row and specify
+// the alignment and justification of children.
+row(x, y)
+  display flex
+  flex-direction row
+
+  if x == center
+    justify-content x
+  else if x == stretch
+    justify-content x
+  else if x == between
+    justify-content space-between
+  else if x == around
+    justify-content space-around
+  else if x == start
+    justify-content flex-start
+  else if x == end
+    justify-content flex-end
+
+  if y == center
+    align-items y
+  else if y == stretch
+    align-items y
+  else if y == baseline
+    align-items y
+  else if y == start
+    align-items flex-start
+  else if y == end
+    align-items flex-end
+
+
+// Create a container by defining the standard
+// width and max-width of an element.
+contain(width, max-width)
+  width width
+  max-width max-width
+
+// Center an element using margins.
+margin-center()
+  margin-left auto
+  margin-right auto
+
+hideBetween(min, max)
+  @media screen and (min-width: min) and (max-width: max)
+    display none
