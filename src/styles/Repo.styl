@@ -1,0 +1,73 @@
+@import globals
+@import mixins
+
+.Repo {
+  column(start, start)
+  contain(95%, 768px)
+  background WHITE
+  margin-top 25px
+  padding-top 20px
+  padding-bottom 25px
+}
+
+.Repo .names {
+  row(start, center)
+  wrap()
+  margin-left 20px
+}
+
+.Repo .names p {
+  font-weight 500
+  letter-spacing 2px
+  padding 5px 10px
+  font-size 1.6rem
+  background PURPLE1
+  text-transform uppercase
+  color WHITE
+  box-shadow 0 2px 0 PURPLE2
+  border-radius 4px
+  margin-bottom 10px
+
+  &:first-of-type {
+    margin-right 10px
+  }
+}
+
+.Repo .watch-date {
+  margin-left 20px
+}
+
+.Repo .watch-date p {
+  font-weight 500
+  letter-spacing 2px
+  padding 5px 10px
+  font-size 1rem
+  background GREEN1
+  text-transform uppercase
+  color WHITE
+  box-shadow 0 2px 0 GREEN2
+  border-radius 4px
+  margin-bottom 10px
+}
+
+.Repo .scroll-advice {
+  font-weight 300
+  margin-center()
+  margin-top 25px
+  font-size 1.4rem
+}
+
+.Repo .chart {
+  width 100%
+  overflow-x scroll
+  column(start, center)
+  padding-bottom 15px
+}
+
+.Repo .chart .recharts-default-tooltip {
+  column(start, center)
+}
+
+.Repo .chart .recharts-legend-wrapper {
+  bottom 0px !important
+}

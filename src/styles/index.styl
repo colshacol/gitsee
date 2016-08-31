@@ -1,9 +1,65 @@
-@import './base/mixins'
+@import globals
+@import mixins
 
-#root
-  width 100%
+.AppWindow {
+  background WHITE
+}
 
-.view:not(.AppWindow)
-  margin-top 60px
+.AppWindow nav {
+  position absolute
+  top 0
+  left 0
   width 100%
+  height 60px
+}
+
+.AppWindow nav > div {
+  padding 0 15px
+  margin-center()
+  row(between, center)
+  contain(100%, 992px)
   height 100%
+}
+
+.AppWindow nav > div .logo {
+  font-weight 700
+  letter-spacing 2px
+  font-size 2.4rem
+
+  @media screen and (max-width: 480px) {
+    font-size 2rem
+  }
+}
+
+.AppWindow nav > div .logo span {
+  font-weight 300
+
+  @media screen and (max-width: 480px) {
+    font-size 1.9475rem
+    position relative
+    bottom 1px
+  }
+}
+
+.AppWindow nav > div input {
+  width 60%
+  height 35px
+  background SMOKE
+  margin-left 10px
+  margin-right 10px
+  padding 5px 10px
+  border-radius 4px
+  font-weight 400
+  font-size 1.4rem
+  letter-spacing 1px
+  color PURPLE1
+  font-family OPEN
+}
+
+.AppWindow nav > div img {
+  width 18px
+}
+
+.Home.view {
+  background SMOKE
+}

@@ -72,17 +72,17 @@ function addRepo(req, res, next) {
         const nowDate = `${month}/${day}/20${year-100}`;
 
         db.repos.save({
-            repo: `${fullname}`,
+            repo: fullname,
+            owner: username,
+            reponame: reponame,
             dateAdded: nowDate,
             url: body.html_url,
             createdDate: body.created_at,
             updatedDate: body.updated_at,
             pushedDate: body.pushed_at,
-            owner: {
-              name: owner.login,
-              avatar: owner.avatar_url,
-              allRepos: owner.repos_url
-            },
+            ownerName: owner.login,
+            ownerAvatar: owner.avatar_url,
+            ownerRepos: owner.repos_url,
             history: [
               {
                 date: nowDate,

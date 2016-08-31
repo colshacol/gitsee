@@ -47,4 +47,6 @@ function onListening() {
       + `:${date.getMinutes()}`;
 
   console.log(`\n> SERVER START: ${time} | Listening @ http://127.0.0.1:${port}\n`);
+
+  // db.repos.drop();
 };

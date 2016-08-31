@@ -6,7 +6,6 @@ import { Link } from 'react-router';
 // import SearchResults from './SearchResults/SearchResults.js';
 
 export default class Home extends Component {
-
 	render() {
 		return (
 			<div className="Home view">
