@@ -8,13 +8,9 @@ const github = octonode.client(token);
 const mongo = require('mongojs');
 const db = mongo('mongodb://localhost/gitsee', ['repos']);
 
-// gitsee.com/repos/
 router.get('/', sendRepos);
-// gitsee.com/repos/simple
 router.get('/simple', sendReposSimple);
-// gitsee.com/repos/add/username/reponame
 router.get('/add/:username/:reponame', addRepo);
-// gitsee.com/repos/username/reponame
 router.get('/:username/:reponame', getRepo);
 
 module.exports = router;
@@ -63,6 +59,7 @@ function addRepo(req, res, next) {
           res.send('Error: Invalid repo.')
           return;
         }
+        console.log(headers);
 
         const owner = body.owner;
         const date = new Date();
@@ -87,7 +84,7 @@ function addRepo(req, res, next) {
               {
                 date: nowDate,
                 stars: body.stargazers_count,
-                watchers: body.watchers_count,
+                watchers: body.subscribers_count,
                 forks: body.forks_count,
                 issues: body.open_issues_count
               }

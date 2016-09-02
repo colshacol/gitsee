@@ -6,7 +6,7 @@ const http = require('http');
 const mongo = require('mongojs');
 const db = mongo('mongodb://localhost/gitsee', ['repos']);
 const schedule = require('node-schedule');
-const blast = require('./schedule');
+const githubBlast = require('./schedule');
 
 const port = '1234';
 app.set('port', port);
@@ -42,7 +42,7 @@ function onError(error) {
 }
 
 function onListening() {
-  blast();
+  githubBlast();
   const date = new Date(),
     time = ((date.getHours() > 12)
       ? date.getHours() - 12
