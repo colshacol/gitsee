@@ -2,18 +2,18 @@
 
 const schedule = require('node-schedule');
 const octonode = require('octonode');
-const token = require('../bin/hidden').githubToken;
+const token = require('../bin/token').githubToken;
 const github = octonode.client(token);
 const mongo = require('mongojs');
 const db = mongo('mongodb://localhost/gitsee', ['repos']);
 const fs = require('fs');
-const writeError = require('writeFile').writeError;
+const writeError = require('./writeFile').writeError;
 
 // for production: run every 24 hours.
 const rule = new schedule.RecurrenceRule();
 rule.dayOfWeek = [0,1,2,3,4,5,6];
 rule.hour = 0;
-rule.minute = 4;
+rule.minute = 0;
 rule.second = 0;
 
 // for development: run every 10 seconds.

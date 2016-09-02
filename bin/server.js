@@ -7,6 +7,7 @@ const mongo = require('mongojs');
 const db = mongo('mongodb://localhost/gitsee', ['repos']);
 const schedule = require('node-schedule');
 const githubBlast = require('./schedule');
+const fs = require('fs');
 
 const port = '1234';
 app.set('port', port);

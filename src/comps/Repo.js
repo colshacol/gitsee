@@ -5,21 +5,22 @@ export default class Repo extends Component {
   render() {
     const repo = this.props.data;
     console.log(typeof this.props.history);
-    console.log(this.props.history[0].stars);
+    console.log(this.props.history);
 
     const chartData = (() => {
       const data = [];
-      for (let i = 0; i < this.props.history.length; i++) {
+      const historyLen = this.props.history.length;
+      for (let i = historyLen - 1; i >= 0; i--) {
         data.push({
-          date: this.props.history[0].date,
-          stars: this.props.history[0].stars,
-          watchers: this.props.history[0].watchers,
-          forks: this.props.history[0].forks,
+          date: this.props.history[i].date,
+          stars: this.props.history[i].stars,
+          watchers: this.props.history[i].watchers,
+          forks: this.props.history[i].forks,
         });
       };
       return data;
     })();
-
+    console.log(chartData);
     return (
       <div className="Repo component">
         <div className="names">

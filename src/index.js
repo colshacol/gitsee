@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM	from 'react-dom';
-import { Router, Route, IndexRoute, browserHistory } from 'react-router';
+import { Router, Route, IndexRoute, browserHistory, Link } from 'react-router';
 import axios from 'axios';
 import Tappable from 'react-tappable';
 
@@ -12,12 +12,13 @@ import './styles/Repo.styl';
 
 import Home from './views/Home';
 import SERP from './views/SERP';
+import Repo from './comps/Repo';
 
 class AppWindow extends Component {
 	constructor() {
 		super();
 		this.state = {
-			activeRepo: {}
+			activeRepo: <Repo />
 		};
 
 		this.fetchRepo = (e) => {
@@ -28,11 +29,15 @@ class AppWindow extends Component {
 					const repo = res.data[0];
 
 					this.setState({
-						activeRepo: repo
+						activeRepo: <Repo
+													owner={repo.owner}
+													reponame={repo.reponame}
+													dateAdded={repo.dateAdded}
+													history={repo.history}
+												/>
 					});
 
 					browserHistory.push('/SERP')
-
 					// setTimeout(() => console.log(this.state.activeRepo), 1000)
 				})
 
@@ -47,7 +52,6 @@ class AppWindow extends Component {
 		const childrenWithProps = React.Children.map(this.props.children,
 			(child) => React.cloneElement(child, {
 				activeRepo: this.state.activeRepo,
-				blah: 'bloo'
 			})
 		);
 
@@ -55,7 +59,7 @@ class AppWindow extends Component {
 			<div className="AppWindow view">
 				<nav>
 					<div>
-						<p className="logo">GIT<span>SEE</span></p>
+						<p className="logo"><Link to="/">GIT<span>SEE</span></Link></p>
 						<input placeholder="search repos"/>
 						<img onClick={this.fetchRepo} src="./public/images/plus.svg" />
 					</div>
@@ -85,9 +89,3 @@ ReactDOM.render(
 // 	 loggedIn: this.state.loggedIn
 //  })
 // );
-
-// <Route path="/login" component={Login}></Route>
-// <Route path="/register" component={Register}></Route>
-// <Route path="/account" component={Account}></Route>
-// <Route path="/log-out" component={LogOut}></Route>
-// <Route path="/about" component={About}></Route>

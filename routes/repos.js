@@ -3,7 +3,7 @@
 const express = require('express');
 const router = express.Router();
 const octonode = require('octonode');
-const token = require('../bin/hidden').githubToken;
+const token = require('../bin/token').githubToken;
 const github = octonode.client(token);
 const mongo = require('mongojs');
 const db = mongo('mongodb://localhost/gitsee', ['repos']);
