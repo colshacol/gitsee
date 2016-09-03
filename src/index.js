@@ -9,6 +9,7 @@ import './styles/grid.styl';
 import './styles/index.styl';
 import './styles/SERP.styl';
 import './styles/Repo.styl';
+import './styles/Home.styl';
 
 import Home from './views/Home';
 import SERP from './views/SERP';
@@ -60,7 +61,7 @@ class AppWindow extends Component {
 				<nav>
 					<div>
 						<p className="logo"><Link to="/">GIT<span>SEE</span></Link></p>
-						<input placeholder="search repos"/>
+						<input id="searchBar" placeholder="search repos"/>
 						<img onClick={this.fetchRepo} src="./public/images/plus.svg" />
 					</div>
 				</nav>

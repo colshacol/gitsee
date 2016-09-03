@@ -54,6 +54,16 @@
   letter-spacing 1px
   color PURPLE1
   font-family OPEN
+  transition all .35s
+
+  &.look-at-me {
+    background PURPLE1
+    transform scale(1.1)
+    color white
+    &::-webkit-input-placeholder {
+      color white
+    }
+  }
 }
 
 .AppWindow nav > div img {

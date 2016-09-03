@@ -2,10 +2,16 @@ import React, { Component } from 'react';
 import  { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 
 export default class Repo extends Component {
+  constructor(props) {
+    super(props);
+  };
+
+  afn = () => {
+    alert('worked?');
+  };
+
   render() {
     const repo = this.props.data;
-    console.log(typeof this.props.history);
-    console.log(this.props.history);
 
     const chartData = (() => {
       const data = [];
@@ -20,11 +26,11 @@ export default class Repo extends Component {
       };
       return data;
     })();
-    console.log(chartData);
+    
     return (
       <div className="Repo component">
         <div className="names">
-          <p>{this.props.owner}</p>
+          <p onClick={this.afn}>{this.props.owner}</p>
           <p>{this.props.reponame}</p>
         </div>
         <div className="watch-date">

@@ -10,6 +10,7 @@ const db = mongo('mongodb://localhost/gitsee', ['repos']);
 
 router.get('/', sendRepos);
 router.get('/simple', sendReposSimple);
+router.get('/count', countRepos);
 router.get('/add/:username/:reponame', addRepo);
 router.get('/:username/:reponame', getRepo);
 
@@ -35,6 +36,15 @@ function sendReposSimple(req, res, next) {
 
     res.send(reposInDB);
   });
+};
+
+// Send the client a count of all watched repos.
+function countRepos(req, res, next) {
+  db.repos.find((err, docs) => {
+    if (err) return;
+    console.log(docs.length);
+    res.send({repos: docs.length});
+  })
 };
 
 // Check to see if repo is already in DB,

@@ -1,0 +1,41 @@
+@import globals
+@import mixins
+
+.Home.view
+  header
+    background url(https://aos.iacpublishinglabs.com/question/aq/1400px-788px/points-connected-line-graph-bar-graph_d3ac4779cbb42b.jpg?domain=cx.aos.ask.com) no-repeat
+    background-size cover
+    background-position center
+
+    & > div
+      column(center, start)
+      padding 50px 20px 25px
+      color WHITE
+      background rgba(147,112,219, 0.95)
+      width 100%
+      height calc(100vh - 60px)
+
+      h2
+        font-weight 500
+        margin-bottom 10px
+
+      h2 + p
+        font-size 1.8rem
+        letter-spacing 1px
+        text-align center
+        font-weight 300
+
+      div
+        column(start, start)
+        padding-top 15px
+        button
+          margin-top 15px
+          font-weight 500
+          letter-spacing 2px
+          padding 10px 15px
+          font-size 1.6rem
+          background GREEN1
+          text-transform uppercase
+          color WHITE
+          box-shadow 0 2px 0 GREEN2
+          border-radius 4px
