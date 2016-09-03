@@ -10,10 +10,12 @@ import './styles/index.styl';
 import './styles/SERP.styl';
 import './styles/Repo.styl';
 import './styles/Home.styl';
+import './styles/Add.styl';
 
 import Home from './views/Home';
 import SERP from './views/SERP';
 import Repo from './comps/Repo';
+import Add from './views/Add.js';
 
 class AppWindow extends Component {
 	constructor() {
@@ -77,6 +79,7 @@ ReactDOM.render(
 		<Route path="/" component={AppWindow}>
 			<IndexRoute component={Home}></IndexRoute>
 			<Route path="/SERP" component={SERP}></Route>
+			<Route path="/add" component={Add}></Route>
 		</Route>
 	</Router>,
 	document.getElementById('root')

@@ -12,8 +12,9 @@ export default class Home extends Component {
 
 
 
-	goToSearchBar = () => {
+	goToSearchBar = (e) => {
 		const searchBar = document.getElementById('searchBar');
+		console.log(e);
 		searchBar.focus();
 		searchBar.classList.add('look-at-me');
 		setTimeout(() => searchBar.classList.remove('look-at-me'), 350);
@@ -32,7 +33,7 @@ export default class Home extends Component {
 						</p>
 						<div>
 							<button onClick={this.goToSearchBar}>Search Repos</button>
-							<button>Add a Repo</button>
+							<button><Link to="/add">Add a Repo</Link></button>
 							<button>Contribute</button>
 							<button>Follow Me</button>
 						</div>

@@ -1,0 +1,50 @@
+@import globals
+@import mixins
+
+.Add.view
+  background SMOKE
+
+  & > div
+    column(center, start)
+    contain(100%, 480px)
+    margin-top 25px
+
+    input
+      contain(90%, 480px)
+      background WHITE
+      padding 13px 20px
+      border-radius 4px
+      font-weight 400
+      font-size 1.6rem
+      letter-spacing 1px
+      color PURPLE1
+      font-family OPEN
+      transition all .35s
+
+    & > div
+      width 100%
+      button
+        margin-center()
+        contain(90%, 480px)
+        margin-top 10px
+        letter-spacing 2px
+        padding 12px 15px 10px
+        font-size 1.6rem
+        background GREEN1
+        text-transform uppercase
+        color WHITE
+        box-shadow 0 2px 0 GREEN2
+        border-radius 4px
+        font-weight 700
+
+  .alerts
+    margin-top 25px
+
+    p
+      text-align center
+      contain(90%, 480px)
+      color rgba(0,0,0,0.1)
+      margin-bottom 15px
+      padding 10px 15px
+      border 1px solid rgba(0,0,0,0.1)
+      border-radius 4px
