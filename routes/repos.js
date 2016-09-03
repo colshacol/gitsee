@@ -69,7 +69,7 @@ function addRepo(req, res, next) {
           res.send('Error: Invalid repo.')
           return;
         }
-        console.log(headers);
+        console.log(status);
 
         const owner = body.owner;
         const date = new Date();

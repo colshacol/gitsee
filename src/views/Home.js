@@ -14,7 +14,6 @@ export default class Home extends Component {
 
 	goToSearchBar = (e) => {
 		const searchBar = document.getElementById('searchBar');
-		console.log(e);
 		searchBar.focus();
 		searchBar.classList.add('look-at-me');
 		setTimeout(() => searchBar.classList.remove('look-at-me'), 350);
