@@ -9,7 +9,7 @@ const schedule = require('node-schedule');
 const githubBlast = require('./schedule');
 const fs = require('fs');
 
-const port = '1234';
+const port = process.env.PORT || 1234;
 app.set('port', port);
 
 const server = http.createServer(app);
