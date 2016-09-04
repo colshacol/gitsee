@@ -178,7 +178,7 @@
 								)
 							),
 							_react2.default.createElement('input', { id: 'search-bar', placeholder: 'search repos' }),
-							_react2.default.createElement('img', { onClick: this.fetchRepo, src: './public/images/plus.svg' })
+							_react2.default.createElement('img', { onClick: this.fetchRepo, src: 'images/plus.svg' })
 						)
 					),
 					childrenWithProps

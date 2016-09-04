@@ -64,7 +64,7 @@ class AppWindow extends Component {
 					<div>
 						<p className="logo"><Link to="/">GIT<span>SEE</span></Link></p>
 						<input id="search-bar" placeholder="search repos"/>
-						<img onClick={this.fetchRepo} src="./public/images/plus.svg" />
+						<img onClick={this.fetchRepo} src="images/plus.svg" />
 					</div>
 				</nav>
 				{childrenWithProps}
