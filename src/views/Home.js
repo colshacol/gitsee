@@ -10,10 +10,14 @@ export default class Home extends Component {
 		super(props);
 	};
 
+	componentDidMount = () => {
+		document.getElementById('search-bar').focus();
+	}
+
 
 
 	goToSearchBar = (e) => {
-		const searchBar = document.getElementById('searchBar');
+		const searchBar = document.getElementById('search-bar');
 		searchBar.focus();
 		searchBar.classList.add('look-at-me');
 		setTimeout(() => searchBar.classList.remove('look-at-me'), 350);

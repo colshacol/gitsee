@@ -12,25 +12,43 @@ export default class Add extends Component {
     }
   };
 
+  componentDidMount() {
+    document.getElementById('new-repo-input').focus();
+  }
+
   submitNewRepo = () => {
     const repoID = document.getElementById('new-repo-input').value;
+    const user = repoID.substr(0, repoID.indexOf('/'));
+    const repo = repoID.substr(repoID.indexOf('/') + 1);
+
+    console.log(user, repo);
+
+    // TODO: Fire invalid input state.
+    // if (!user.match(/^(\w|-)*/) || !repo.match(/^(\w|-)*/)) {
+    //   this.setState({alertInvalid: true});
+    //   setTimeout(() => {
+    //     this.setState({alertInvalid: false});
+    //   }, 3000)
+    //   return;
+    // }
+
     axios.get('http://127.0.0.1:1234/repos/add/' + repoID)
       .then(res => {
         // console.log(res.data);
         if (res.data == 'Added to DB.') {
           this.setState({alertAdded: true});
           setTimeout(() => {
-            this.setState({alertAdded: false})
+            this.setState({alertAdded: false});
           }, 3000)
         } else if (res.data == 'Repo already in db.') {
           this.setState({alertAlready: true});
           setTimeout(() => {
-            this.setState({alertAlready: false})
+            this.setState({alertAlready: false});
           }, 3000)
         } else if (res.data == 'Error: Invalid repo.') {
           this.setState({alertNoExist: true});
           setTimeout(() => {
-            this.setState({alertNoExist: false})
+            this.setState({alertNoExist: false});
           }, 3000)
         }
       })
