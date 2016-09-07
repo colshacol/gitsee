@@ -75,8 +75,8 @@ function addRepo(req, res, next) {
         const date = new Date();
         const day = date.getDay();
         const month = date.getMonth();
-        const year = date.getYear();
-        const nowDate = `${month}/${day}/20${year-100}`;
+        const year = date.getFullYear();
+        const nowDate = `${month}/${day}/${year}`;
 
         db.repos.save({
             repo: fullname,

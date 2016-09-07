@@ -39,10 +39,10 @@ const blast = () => {
         console.log(`\n${fullname} history updating...`);
 
         const date = new Date();
-        const day = date.getDay();
-        const month = date.getMonth();
-        const year = date.getYear();
-        const nowDate = `${month}/${day}/20${year-100}`;
+        const day = date.getDate();
+        const month = date.getMonth() + 1;
+        const year = date.getFullYear();
+        const nowDate = `${month}/${day}/${year}`;
 
         // Query GitHub to get current repo stats.
         github.get(`https://api.github.com/repos/${fullname}?client_id=0dcf8f9edebb19792e7a&client_secret=4aafa7ff93ccb27a9ac904b9f9cc3052fff3be59`, (err, status, body, headers) => {
