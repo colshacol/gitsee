@@ -35,10 +35,14 @@ export default class Home extends Component {
 							open source technologies are thriving, idling or dying.
 						</p>
 						<div>
-							<button onClick={this.goToSearchBar}>Search Repos</button>
-							<button><Link to="/add">Add a Repo</Link></button>
-							<button>Contribute</button>
-							<button>Follow Me</button>
+							<div className="button-holder">
+								<button onClick={this.goToSearchBar}>Search Repos</button>
+								<button><Link to="/add">Add a Repo</Link></button>
+							</div>
+							<div className="button-holder">
+								<button><a href="https://github.com/colshacol/gitsee/tree/dev">Contribute</a></button>
+								<button><a href="https://twitter.com/colshacol">Follow Me</a></button>
+							</div>
 						</div>
 					</div>
 				</header>

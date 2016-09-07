@@ -6,6 +6,7 @@
     background url(https://aos.iacpublishinglabs.com/question/aq/1400px-788px/points-connected-line-graph-bar-graph_d3ac4779cbb42b.jpg?domain=cx.aos.ask.com) no-repeat
     background-size cover
     background-position center
+    width 100%
 
     & > div
       column(center, start)
@@ -24,19 +25,26 @@
         letter-spacing 1px
         text-align center
         font-weight 300
+        max-width 535px
 
       div
-        column(start, start)
+        column(center, start)
         padding-top 15px
-        button
-          margin-top 15px
-          font-weight 500
-          letter-spacing 2px
-          padding 10px 15px
-          font-size 1.6rem
-          background GREEN1
-          text-transform uppercase
-          color WHITE
-          box-shadow 0 2px 0 GREEN2
-          border-radius 4px
-          font-weight 700
+
+        .button-holder
+          row(center, center)
+          @media screen and (max-width: 480px)
+            column(center, center)
+          button
+            margin-left 10px
+            margin-top 15px
+            font-weight 500
+            letter-spacing 2px
+            padding 10px 15px
+            font-size 1.6rem
+            background GREEN1
+            text-transform uppercase
+            color WHITE
+            box-shadow 0 2px 0 GREEN2
+            border-radius 4px
+            font-weight 700
