@@ -32,7 +32,7 @@ class AppWindow extends Component {
 		}
 
 		this.fetchRepoByClick = ( ) => {
-			const input = document.querySelector('nav > div input').value;
+			const input = document.querySelector('nav > div input').value.toLowerCase();
 			if (input.length < 3) { return }
 			axios.get('/repos/' + input)
 				.then((res) => {

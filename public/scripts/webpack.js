@@ -124,7 +124,7 @@
 			};
 
 			_this.fetchRepoByClick = function () {
-				var input = document.querySelector('nav > div input').value;
+				var input = document.querySelector('nav > div input').value.toLowerCase();
 				if (input.length < 3) {
 					return;
 				}
@@ -64398,7 +64398,7 @@
 	    };
 
 	    _this.submitNewRepoByClick = function () {
-	      var repoID = document.getElementById('new-repo-input').value;
+	      var repoID = document.getElementById('new-repo-input').value.toLowerCase();
 	      var user = repoID.substr(0, repoID.indexOf('/'));
 	      var repo = repoID.substr(repoID.indexOf('/') + 1);
 
