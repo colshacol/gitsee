@@ -24,7 +24,7 @@ export default class Add extends Component {
   }
 
   submitNewRepoByClick = () => {
-    const repoID = document.getElementById('new-repo-input').value;
+    const repoID = document.getElementById('new-repo-input').value.toLowerCase();
     const user = repoID.substr(0, repoID.indexOf('/'));
     const repo = repoID.substr(repoID.indexOf('/') + 1);
 
