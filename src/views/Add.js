@@ -16,7 +16,14 @@ export default class Add extends Component {
     document.getElementById('new-repo-input').focus();
   }
 
-  submitNewRepo = () => {
+  submitNewRepoByKeyPress = (e) => {
+    if (e.which === 13) {
+      console.log('yep')
+      this.submitNewRepoByClick()
+    }
+  }
+
+  submitNewRepoByClick = () => {
     const repoID = document.getElementById('new-repo-input').value;
     const user = repoID.substr(0, repoID.indexOf('/'));
     const repo = repoID.substr(repoID.indexOf('/') + 1);
@@ -32,7 +39,7 @@ export default class Add extends Component {
     //   return;
     // }
 
-    axios.get('https://agile-bayou-37755.herokuapp.com/add/' + repoID)
+    axios.get('/repos/add/' + repoID)
       .then(res => {
         // console.log(res.data);
         if (res.data == 'Added to DB.') {
@@ -61,9 +68,9 @@ export default class Add extends Component {
     return (
       <div className="Add view">
         <div>
-          <input id="new-repo-input" placeholder="owner/repo"/>
+          <input onKeyPress={this.submitNewRepoByKeyPress} id="new-repo-input" placeholder="owner/repo"/>
           <div>
-            <button onClick={this.submitNewRepo}>SUBMIT</button>
+            <button onClick={this.submitNewRepoByClick}>SUBMIT</button>
           </div>
         </div>
         <div className="alerts">

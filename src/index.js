@@ -24,10 +24,17 @@ class AppWindow extends Component {
 			activeRepo: <Repo />
 		};
 
-		this.fetchRepo = (e) => {
+		this.fetchRepoByKeypress = (e) => {
+			e.preventDefault()
+			if (e.which === 13) {
+				this.fetchRepoByClick()
+			}
+		}
+
+		this.fetchRepoByClick = ( ) => {
 			const input = document.querySelector('nav > div input').value;
 			if (input.length < 3) { return }
-			axios.get('https://agile-bayou-37755.herokuapp.com/repos/' + input)
+			axios.get('/repos/' + input)
 				.then((res) => {
 					const repo = res.data[0];
 
@@ -63,8 +70,8 @@ class AppWindow extends Component {
 				<nav>
 					<div>
 						<p className="logo"><Link to="/">GIT<span>SEE</span></Link></p>
-						<input id="search-bar" placeholder="search repos"/>
-						<img onClick={this.fetchRepo} src="images/search.svg" />
+						<input onKeyUp={this.fetchRepoByKeypress} id="search-bar" placeholder="search repos"/>
+						<img onClick={this.fetchRepoByClick} src="images/search.svg" />
 					</div>
 				</nav>
 				{childrenWithProps}
