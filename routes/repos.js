@@ -51,25 +51,30 @@ function countRepos(req, res, next) {
 // query Github for repo information,
 // add repo to DB.
 function addRepo(req, res, next) {
+  console.log('addRepo()');
   const username = req.params.username;
   const reponame = req.params.reponame;
   const fullname = username + '/' + reponame;
+  console.log(fullName);
 
   db.repos.findOne({repo: fullname}, (dbErr, dbRes) => {
     // Something fucked up.
     if (dbErr) {
+      console.log('db.repos.findOne() failed.');
       res.send('Error in DB query.');
     }
 
     // Repo not present in DB.
     else if (!dbRes) {
+      console.log('Not found in DB.');
       github.get(`repos/${fullname}`, (err, status, body, headers) => {
         if (err) {
           console.log(err);
+          console.log('Invalid repo.');
           res.send('Error: Invalid repo.')
           return;
         }
-        console.log(status);
+        // console.log(status);
 
         const owner = body.owner;
         const date = new Date();
@@ -78,6 +83,7 @@ function addRepo(req, res, next) {
         const year = date.getFullYear();
         const nowDate = `${month}/${day}/${year}`;
 
+        console.log('Creating new DB doc.');
         db.repos.save({
             repo: fullname,
             owner: username,
@@ -100,9 +106,9 @@ function addRepo(req, res, next) {
               }
             ]
           }, (fail, pass) => {
-            if (fail) console.log(fail);
+            if (fail) console.log('FAILED', fail);
             else {
-              console.log(pass);
+              console.log('PASSED', pass);
               res.send('Added to DB.');
             }
           });
