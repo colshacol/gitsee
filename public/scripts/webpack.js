@@ -64399,7 +64399,7 @@
 	      //   return;
 	      // }
 
-	      _axios2.default.get('https://agile-bayou-37755.herokuapp.com/repos/add/' + repoID).then(function (res) {
+	      _axios2.default.get('/repos/add/' + repoID).then(function (res) {
 	        // console.log(res.data);
 	        if (res.data == 'Added to DB.') {
 	          _this.setState({ alertAdded: true });

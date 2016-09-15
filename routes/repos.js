@@ -51,11 +51,11 @@ function countRepos(req, res, next) {
 // query Github for repo information,
 // add repo to DB.
 function addRepo(req, res, next) {
-  console.log('addRepo()');
+  console.log(`addRepo(${req.params.username}/${req.params.reponame})`);
   const username = req.params.username;
   const reponame = req.params.reponame;
   const fullname = username + '/' + reponame;
-  console.log(fullName);
+  console.log(fullname);
 
   db.repos.findOne({repo: fullname}, (dbErr, dbRes) => {
     // Something fucked up.
