@@ -13,7 +13,7 @@ const fs = require('fs');
 // for production: run every 24 hours.
 const rule = new schedule.RecurrenceRule();
 rule.dayOfWeek = [0,1,2,3,4,5,6];
-rule.hour = 0;
+rule.hour = 5;
 rule.minute = 20;
 rule.second = 0;
 
