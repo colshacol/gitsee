@@ -2,10 +2,10 @@
 
 const schedule = require('node-schedule');
 const octonode = require('octonode');
-const token = require('../token')
-const github = octonode.client({id: token.GHid, secret: token.GHsecret})
+// const token = require('../token')
+const github = octonode.client({id: 'a5a51f984' + 'c89b000260f', secret: '20e6d94a258db' + '36178f7615a574' + 'c873ef9b4a4de'})
 const mongo = require('mongojs');
-const db = mongo(`mongodb://${token.MLuser}:${token.MLpass}@ds019746.mlab.com:19746/gitsee`, ['repos']);
+const db = mongo(`mongodb://gitsee:MarleyMC__14@ds019746.mlab.com:19746/gitsee`, ['repos']);
 
 const fs = require('fs');
 // const writeError = require('./writeFile').writeError;

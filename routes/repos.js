@@ -3,11 +3,10 @@
 const express = require('express');
 const router = express.Router();
 const octonode = require('octonode');
-const token = require('../token');
-const github = octonode.client({id: token.GHid, secret: token.GHsecret})
+// const token = require('../token');
+const github = octonode.client({id: 'a5a51f984c89b000260f', secret: '20e6d94a258db36178f7615a574c873ef9b4a4de'})
 const mongo = require('mongojs');
-console.log(token.mongoAddress);
-const db = mongo(token.mongoAddress, ['repos']);
+const db = mongo('mongodb://gitsee:MarleyMC__14@ds019746.mlab.com:19746/gitsee', ['repos']);
 
 router.get('/', sendRepos);
 router.get('/simple', sendReposSimple);
