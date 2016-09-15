@@ -27,7 +27,7 @@ class AppWindow extends Component {
 		this.fetchRepo = (e) => {
 			const input = document.querySelector('nav > div input').value;
 			if (input.length < 3) { return }
-			axios.get('http://127.0.0.1:1234/repos/' + input)
+			axios.get('https://agile-bayou-37755.herokuapp.com/repos/' + input)
 				.then((res) => {
 					const repo = res.data[0];
 

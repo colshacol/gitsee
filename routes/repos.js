@@ -3,10 +3,11 @@
 const express = require('express');
 const router = express.Router();
 const octonode = require('octonode');
-const token = require('../bin/token').githubToken;
-const github = octonode.client(token);
+const token = require('../token');
+const github = octonode.client({id: token.GHid, secret: token.GHsecret})
 const mongo = require('mongojs');
-const db = mongo('mongodb://localhost/gitsee', ['repos']);
+console.log(token.mongoAddress);
+const db = mongo(token.mongoAddress, ['repos']);
 
 router.get('/', sendRepos);
 router.get('/simple', sendReposSimple);
@@ -73,8 +74,8 @@ function addRepo(req, res, next) {
 
         const owner = body.owner;
         const date = new Date();
-        const day = date.getDay();
-        const month = date.getMonth();
+        const day = date.getDate();
+        const month = date.getMonth() + 1;
         const year = date.getFullYear();
         const nowDate = `${month}/${day}/${year}`;
 
