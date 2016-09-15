@@ -116,12 +116,19 @@
 				activeRepo: _react2.default.createElement(_Repo2.default, null)
 			};
 
-			_this.fetchRepo = function (e) {
+			_this.fetchRepoByKeypress = function (e) {
+				e.preventDefault();
+				if (e.which === 13) {
+					_this.fetchRepoByClick();
+				}
+			};
+
+			_this.fetchRepoByClick = function () {
 				var input = document.querySelector('nav > div input').value;
 				if (input.length < 3) {
 					return;
 				}
-				_axios2.default.get('https://agile-bayou-37755.herokuapp.com/repos/' + input).then(function (res) {
+				_axios2.default.get('/repos/' + input).then(function (res) {
 					var repo = res.data[0];
 
 					_this.setState({
@@ -177,8 +184,8 @@
 									)
 								)
 							),
-							_react2.default.createElement('input', { id: 'search-bar', placeholder: 'search repos' }),
-							_react2.default.createElement('img', { onClick: this.fetchRepo, src: 'images/search.svg' })
+							_react2.default.createElement('input', { onKeyUp: this.fetchRepoByKeypress, id: 'search-bar', placeholder: 'search repos' }),
+							_react2.default.createElement('img', { onClick: this.fetchRepoByClick, src: 'images/search.svg' })
 						)
 					),
 					childrenWithProps
@@ -64383,7 +64390,14 @@
 
 	    var _this = _possibleConstructorReturn(this, (Add.__proto__ || Object.getPrototypeOf(Add)).call(this, props));
 
-	    _this.submitNewRepo = function () {
+	    _this.submitNewRepoByKeyPress = function (e) {
+	      if (e.which === 13) {
+	        console.log('yep');
+	        _this.submitNewRepoByClick();
+	      }
+	    };
+
+	    _this.submitNewRepoByClick = function () {
 	      var repoID = document.getElementById('new-repo-input').value;
 	      var user = repoID.substr(0, repoID.indexOf('/'));
 	      var repo = repoID.substr(repoID.indexOf('/') + 1);
@@ -64445,13 +64459,13 @@
 	        _react2.default.createElement(
 	          'div',
 	          null,
-	          _react2.default.createElement('input', { id: 'new-repo-input', placeholder: 'owner/repo' }),
+	          _react2.default.createElement('input', { onKeyPress: this.submitNewRepoByKeyPress, id: 'new-repo-input', placeholder: 'owner/repo' }),
 	          _react2.default.createElement(
 	            'div',
 	            null,
 	            _react2.default.createElement(
 	              'button',
-	              { onClick: this.submitNewRepo },
+	              { onClick: this.submitNewRepoByClick },
 	              'SUBMIT'
 	            )
 	          )
