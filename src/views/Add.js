@@ -32,7 +32,7 @@ export default class Add extends Component {
     //   return;
     // }
 
-    axios.get('https://agile-bayou-37755.herokuapp.com/add/' + repoID)
+    axios.get('https://agile-bayou-37755.herokuapp.com/repos/add/' + repoID)
       .then(res => {
         // console.log(res.data);
         if (res.data == 'Added to DB.') {
