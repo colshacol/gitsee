@@ -21,7 +21,9 @@ class AppWindow extends Component {
 	constructor() {
 		super();
 		this.state = {
-			activeRepo: <Repo />
+			activeRepo: <Repo />,
+			searchPlaceholder: 'search repos',
+			searchAlert: ''
 		};
 
 		this.fetchRepoByKeypress = (e) => {
@@ -32,10 +34,12 @@ class AppWindow extends Component {
 		}
 
 		this.fetchRepoByClick = ( ) => {
-			const input = document.querySelector('nav > div input').value.toLowerCase();
+			const searchBar = document.getElementById('search-bar')
+			const input = searchBar.value
 			if (input.length < 3) { return }
-			axios.get('/repos/' + input)
+			axios.get('/repos/' + input.toLowerCase())
 				.then((res) => {
+
 					const repo = res.data[0];
 
 					this.setState({
@@ -52,8 +56,19 @@ class AppWindow extends Component {
 				})
 
 				.catch((err) => {
-					console.log('err!');
-					console.log(err);
+					this.setState({
+						searchPlaceholder: 'Repo not found in our DB.',
+						searchAlert: 'no-repo-found'
+					})
+
+					searchBar.value = 'Repo not found in our DB. Try adding it.';
+
+					setTimeout(() => {
+						searchBar.value = input;
+						this.setState({
+							searchAlert: ''
+						})
+					}, 1500)
 				})
 		};
 	};
@@ -70,7 +85,7 @@ class AppWindow extends Component {
 				<nav>
 					<div>
 						<p className="logo"><Link to="/">GIT<span>SEE</span></Link></p>
-						<input onKeyUp={this.fetchRepoByKeypress} id="search-bar" placeholder="search repos"/>
+						<input onKeyUp={this.fetchRepoByKeypress} className={this.state.searchAlert} id="search-bar" placeholder={this.state.searchPlaceholder}/>
 						<img onClick={this.fetchRepoByClick} src="images/search.svg" />
 					</div>
 				</nav>

@@ -4,6 +4,7 @@ import  { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from '
 export default class Repo extends Component {
   constructor(props) {
     super(props);
+    this.state = {}
   };
 
   afn = () => {
@@ -26,7 +27,7 @@ export default class Repo extends Component {
       };
       return data;
     })();
-    
+
     return (
       <div className="Repo component">
         <div className="names">

@@ -113,7 +113,9 @@
 			var _this = _possibleConstructorReturn(this, (AppWindow.__proto__ || Object.getPrototypeOf(AppWindow)).call(this));
 
 			_this.state = {
-				activeRepo: _react2.default.createElement(_Repo2.default, null)
+				activeRepo: _react2.default.createElement(_Repo2.default, null),
+				searchPlaceholder: 'search repos',
+				searchAlert: ''
 			};
 
 			_this.fetchRepoByKeypress = function (e) {
@@ -124,11 +126,13 @@
 			};
 
 			_this.fetchRepoByClick = function () {
-				var input = document.querySelector('nav > div input').value.toLowerCase();
+				var searchBar = document.getElementById('search-bar');
+				var input = searchBar.value;
 				if (input.length < 3) {
 					return;
 				}
-				_axios2.default.get('/repos/' + input).then(function (res) {
+				_axios2.default.get('/repos/' + input.toLowerCase()).then(function (res) {
+
 					var repo = res.data[0];
 
 					_this.setState({
@@ -143,8 +147,19 @@
 					_reactRouter.browserHistory.push('/SERP');
 					// setTimeout(() => console.log(this.state.activeRepo), 1000)
 				}).catch(function (err) {
-					console.log('err!');
-					console.log(err);
+					_this.setState({
+						searchPlaceholder: 'Repo not found in our DB.',
+						searchAlert: 'no-repo-found'
+					});
+
+					searchBar.value = 'Repo not found in our DB. Try adding it.';
+
+					setTimeout(function () {
+						searchBar.value = input;
+						_this.setState({
+							searchAlert: ''
+						});
+					}, 1500);
 				});
 			};
 			return _this;
@@ -184,7 +199,7 @@
 									)
 								)
 							),
-							_react2.default.createElement('input', { onKeyUp: this.fetchRepoByKeypress, id: 'search-bar', placeholder: 'search repos' }),
+							_react2.default.createElement('input', { onKeyUp: this.fetchRepoByKeypress, className: this.state.searchAlert, id: 'search-bar', placeholder: this.state.searchPlaceholder }),
 							_react2.default.createElement('img', { onClick: this.fetchRepoByClick, src: 'images/search.svg' })
 						)
 					),
@@ -29582,7 +29597,7 @@
 
 
 	// module
-	exports.push([module.id, ".AppWindow {\n  background: #fff;\n}\n.AppWindow nav {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 60px;\n}\n.AppWindow nav > div {\n  padding: 0 15px;\n  margin-left: auto;\n  margin-right: auto;\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n  align-items: center;\n  width: 100%;\n  max-width: 992px;\n  height: 100%;\n}\n.AppWindow nav > div .logo {\n  font-weight: 700;\n  letter-spacing: 2px;\n  font-size: 2.4rem;\n}\n@media screen and (max-width: 480px) {\n  .AppWindow nav > div .logo {\n    font-size: 2rem;\n  }\n}\n.AppWindow nav > div .logo span {\n  font-weight: 300;\n}\n@media screen and (max-width: 480px) {\n  .AppWindow nav > div .logo span {\n    font-size: 1.9475rem;\n    position: relative;\n    bottom: 1px;\n  }\n}\n.AppWindow nav > div input {\n  width: 60%;\n  height: 35px;\n  background: #f4f3f0;\n  margin-left: 10px;\n  margin-right: 10px;\n  padding: 5px 10px;\n  border-radius: 4px;\n  font-weight: 400;\n  font-size: 1.4rem;\n  letter-spacing: 1px;\n  color: #9370db;\n  font-family: 'Open Sans', sans-serif;\n  transition: all 0.35s;\n}\n.AppWindow nav > div input.look-at-me {\n  background: #9370db;\n  transform: scale(1.1);\n  color: #fff;\n}\n.AppWindow nav > div input.look-at-me::-webkit-input-placeholder {\n  color: #fff;\n}\n.AppWindow nav > div img {\n  width: 22px;\n}\n.Home.view {\n  background: #f4f3f0;\n}\n", ""]);
+	exports.push([module.id, ".AppWindow {\n  background: #fff;\n}\n.AppWindow nav {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 60px;\n}\n.AppWindow nav > div {\n  padding: 0 15px;\n  margin-left: auto;\n  margin-right: auto;\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n  align-items: center;\n  width: 100%;\n  max-width: 992px;\n  height: 100%;\n}\n.AppWindow nav > div .logo {\n  font-weight: 700;\n  letter-spacing: 2px;\n  font-size: 2.4rem;\n}\n@media screen and (max-width: 480px) {\n  .AppWindow nav > div .logo {\n    font-size: 2rem;\n  }\n}\n.AppWindow nav > div .logo span {\n  font-weight: 300;\n}\n@media screen and (max-width: 480px) {\n  .AppWindow nav > div .logo span {\n    font-size: 1.9475rem;\n    position: relative;\n    bottom: 1px;\n  }\n}\n.AppWindow nav > div input {\n  width: 60%;\n  height: 35px;\n  background: #f4f3f0;\n  margin-left: 10px;\n  margin-right: 10px;\n  padding: 5px 10px;\n  border-radius: 4px;\n  font-weight: 400;\n  font-size: 1.4rem;\n  letter-spacing: 1px;\n  color: #9370db;\n  font-family: 'Open Sans', sans-serif;\n  transition: all 0.35s;\n}\n.AppWindow nav > div input.look-at-me {\n  background: #9370db;\n  transform: scale(1.1);\n  color: #fff;\n}\n.AppWindow nav > div input.look-at-me::-webkit-input-placeholder {\n  color: #fff;\n}\n.AppWindow nav > div input.no-repo-found {\n  transform: scale(1.1);\n}\n.AppWindow nav > div input.no-repo-found::-webkit-input-placeholder {\n  color: #fff;\n}\n.AppWindow nav > div img {\n  width: 22px;\n}\n.Home.view {\n  background: #f4f3f0;\n}\n", ""]);
 
 	// exports
 
@@ -29974,6 +29989,7 @@
 	      alert('worked?');
 	    };
 
+	    _this.state = {};
 	    return _this;
 	  }
 

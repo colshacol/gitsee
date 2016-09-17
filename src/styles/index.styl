@@ -41,6 +41,7 @@
   }
 }
 
+
 .AppWindow nav > div input {
   width 60%
   height 35px
@@ -60,6 +61,13 @@
     background PURPLE1
     transform scale(1.1)
     color white
+    &::-webkit-input-placeholder {
+      color white
+    }
+  }
+
+  &.no-repo-found {
+    transform scale(1.1)
     &::-webkit-input-placeholder {
       color white
     }
