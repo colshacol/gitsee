@@ -64398,6 +64398,12 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+	// TODO: Auto match owner/repo onPaste of URL.
+
+	// TODO: Validate input before repos/add request.
+
+	// TODO: On add request, if repo exists, prompt user to view its chart.
+
 	var Add = function (_Component) {
 	  _inherits(Add, _Component);
 
@@ -64407,30 +64413,15 @@
 	    var _this = _possibleConstructorReturn(this, (Add.__proto__ || Object.getPrototypeOf(Add)).call(this, props));
 
 	    _this.submitNewRepoByKeyPress = function (e) {
-	      if (e.which === 13) {
-	        console.log('yep');
-	        _this.submitNewRepoByClick();
-	      }
+	      if (e.which === 13) _this.submitNewRepo();
 	    };
 
-	    _this.submitNewRepoByClick = function () {
+	    _this.submitNewRepo = function () {
 	      var repoID = document.getElementById('new-repo-input').value.toLowerCase().replace(/\s+/g, '');
-	      var user = repoID.substr(0, repoID.indexOf('/'));
-	      var repo = repoID.substr(repoID.indexOf('/') + 1);
-
-	      console.log(user, repo);
-
-	      // TODO: Fire invalid input state.
-	      // if (!user.match(/^(\w|-)*/) || !repo.match(/^(\w|-)*/)) {
-	      //   this.setState({alertInvalid: true});
-	      //   setTimeout(() => {
-	      //     this.setState({alertInvalid: false});
-	      //   }, 3000)
-	      //   return;
-	      // }
+	      // user = repoID.substr(0, repoID.indexOf('/')),
+	      // repo = repoID.substr(repoID.indexOf('/') + 1)
 
 	      _axios2.default.get('/repos/add/' + repoID).then(function (res) {
-	        // console.log(res.data);
 	        if (res.data == 'Added to DB.') {
 	          _this.setState({ alertAdded: true });
 	          setTimeout(function () {
@@ -64447,8 +64438,6 @@
 	            _this.setState({ alertNoExist: false });
 	          }, 3000);
 	        }
-	      }).catch(function (err) {
-	        console.log(err);
 	      });
 	    };
 
@@ -64463,9 +64452,20 @@
 
 	  _createClass(Add, [{
 	    key: 'componentDidMount',
+
+
+	    // When the view loads, focus on the #new-repo-input element.
 	    value: function componentDidMount() {
 	      document.getElementById('new-repo-input').focus();
 	    }
+
+	    // When enter is pressed inside the #new-repo-input, fire the submit event.
+
+
+	    // Validate and pull owner and repo name from user's input.
+	    // Send owner/repo combo to server to be checked and added to watch list.
+	    // Depending on server response, alert the user with state driven styles.
+
 	  }, {
 	    key: 'render',
 	    value: function render() {
@@ -64475,13 +64475,17 @@
 	        _react2.default.createElement(
 	          'div',
 	          null,
-	          _react2.default.createElement('input', { onKeyPress: this.submitNewRepoByKeyPress, id: 'new-repo-input', placeholder: 'owner/repo' }),
+	          _react2.default.createElement('input', {
+	            onKeyPress: this.submitNewRepoByKeyPress,
+	            id: 'new-repo-input',
+	            placeholder: 'owner/repo'
+	          }),
 	          _react2.default.createElement(
 	            'div',
 	            null,
 	            _react2.default.createElement(
 	              'button',
-	              { onClick: this.submitNewRepoByClick },
+	              { onClick: this.submitNewRepo },
 	              'SUBMIT'
 	            )
 	          )
