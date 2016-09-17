@@ -1,30 +1,30 @@
-import React, { Component } from 'react';
-import ReactDOM	from 'react-dom';
-import { Router, Route, IndexRoute, browserHistory, Link } from 'react-router';
-import axios from 'axios';
-import Tappable from 'react-tappable';
+import React, { Component } from 'react'
+import ReactDOM	from 'react-dom'
+import { Router, Route, IndexRoute, browserHistory, Link } from 'react-router'
+import axios from 'axios'
+import Tappable from 'react-tappable'
 
-import './styles/reset.styl';
-import './styles/grid.styl';
-import './styles/index.styl';
-import './styles/SERP.styl';
-import './styles/Repo.styl';
-import './styles/Home.styl';
-import './styles/Add.styl';
+import './styles/reset.styl'
+import './styles/grid.styl'
+import './styles/index.styl'
+import './styles/SERP.styl'
+import './styles/Repo.styl'
+import './styles/Home.styl'
+import './styles/Add.styl'
 
-import Home from './views/Home';
-import SERP from './views/SERP';
-import Repo from './comps/Repo';
-import Add from './views/Add.js';
+import Home from './views/Home'
+import SERP from './views/SERP'
+import Repo from './comps/Repo'
+import Add from './views/Add.js'
 
 class AppWindow extends Component {
 	constructor() {
-		super();
+		super()
 		this.state = {
 			activeRepo: <Repo />,
 			searchPlaceholder: 'search repos',
 			searchAlert: ''
-		};
+		}
 
 		this.fetchRepoByKeypress = (e) => {
 			e.preventDefault()
@@ -40,7 +40,7 @@ class AppWindow extends Component {
 			axios.get('/repos/' + input.toLowerCase())
 				.then((res) => {
 
-					const repo = res.data[0];
+					const repo = res.data[0]
 
 					this.setState({
 						activeRepo: <Repo
@@ -49,7 +49,7 @@ class AppWindow extends Component {
 													dateAdded={repo.dateAdded}
 													history={repo.history}
 												/>
-					});
+					})
 
 					browserHistory.push('/SERP')
 					// setTimeout(() => console.log(this.state.activeRepo), 1000)
@@ -70,15 +70,15 @@ class AppWindow extends Component {
 						})
 					}, 1500)
 				})
-		};
-	};
+		}
+	}
 
 	render() {
 		const childrenWithProps = React.Children.map(this.props.children,
 			(child) => React.cloneElement(child, {
 				activeRepo: this.state.activeRepo,
 			})
-		);
+		)
 
 		return (
 			<div className="AppWindow view">

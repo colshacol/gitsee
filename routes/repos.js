@@ -8,11 +8,12 @@ const github = octonode.client({id: 'a5a51f984c89b000260f', secret: '20e6d94a258
 const mongo = require('mongojs');
 const db = mongo('mongodb://gitsee:MarleyMC__14@ds019746.mlab.com:19746/gitsee', ['repos']);
 
-router.get('/', sendRepos);
-router.get('/simple', sendReposSimple);
-router.get('/count', countRepos);
-router.get('/add/:username/:reponame', addRepo);
-router.get('/:username/:reponame', getRepo);
+router.get('/', sendRepos)
+router.get('/simple', sendReposSimple)
+router.get('/count', countRepos)
+router.get('/add/:username/:reponame', addRepo)
+router.get('/:username/:reponame', getRepo)
+router.get('/undo', undoLastBlast)
 
 module.exports = router;
 
@@ -51,30 +52,27 @@ function countRepos(req, res, next) {
 // query Github for repo information,
 // add repo to DB.
 function addRepo(req, res, next) {
-  console.log(`addRepo(${req.params.username}/${req.params.reponame})`);
+  console.log(`\n\nADD: ${req.params.username}/${req.params.reponame}`);
   const username = req.params.username;
   const reponame = req.params.reponame;
   const fullname = username + '/' + reponame;
-  console.log(fullname);
 
   db.repos.findOne({repo: fullname}, (dbErr, dbRes) => {
     // Something fucked up.
     if (dbErr) {
-      console.log('db.repos.findOne() failed.');
+      console.log('Failed to query DB.\n\n');
       res.send('Error in DB query.');
     }
 
     // Repo not present in DB.
     else if (!dbRes) {
-      console.log('Not found in DB.');
+      console.log('Not found in DB. Proceeding to add repo to DB.');
       github.get(`repos/${fullname}`, (err, status, body, headers) => {
         if (err) {
-          console.log(err);
-          console.log('Invalid repo.');
+          console.log('Invalid repo. ' + fullname);
           res.send('Error: Invalid repo.')
           return;
         }
-        // console.log(status);
 
         const owner = body.owner;
         const date = new Date();
@@ -83,7 +81,7 @@ function addRepo(req, res, next) {
         const year = date.getFullYear();
         const nowDate = `${month}/${day}/${year}`;
 
-        console.log('Creating new DB doc.');
+        console.log(`Creating new DB entry for ${fullname}.`)
         db.repos.save({
             repo: fullname,
             owner: username,
@@ -106,10 +104,10 @@ function addRepo(req, res, next) {
               }
             ]
           }, (fail, pass) => {
-            if (fail) console.log('FAILED', fail);
+            if (fail) console.log(`Failed to save DB entry for ${fullname}.\n\n`)
             else {
-              console.log('PASSED', pass);
-              res.send('Added to DB.');
+              console.log(`Successfully added ${fullname} to DB watch list.`)
+              res.send('Added to DB.')
             }
           });
       });
@@ -117,6 +115,7 @@ function addRepo(req, res, next) {
 
     // Repo already exists in DB.
     else {
+      console.log(`${fullname} is already in DB.\n\n`)
       res.send('Repo already in db.');
     }
   });
@@ -137,3 +136,38 @@ function getRepo(req, res, next) {
     res.send(pass);
   })
 };
+
+function undoLastBlast(req, res, next) {
+  res.send('No.')
+  return;
+  db.repos.find((err, docs) => {
+    if (err) {
+      console.log('UNDO LAST BLAST: Failed to query DB.')
+      return;
+    }
+
+    if (!docs) {
+      console.log('No docs found in DB.')
+      return;
+    }
+
+    const docsLen = docs.length;
+    for(let i = 0; i < docsLen; i++) {
+      const doc = docs[i]
+      const history = doc.history;
+      console.log(history)
+      if (history.length <= 1) return;
+      const newHistory = history
+      console.log(doc.repo);
+      console.log(history)
+      console.log(newHistory)
+      db.repos.findAndModify({
+        query: { repo: doc.repo },
+        update: { $set: { history: [newHistory] } },
+        new: true
+      }, (err, doc, lastErrorObject) => {
+        console.log(doc)
+      })
+    }
+ })
+}
