@@ -29789,10 +29789,6 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	// import SearchBar from './SearchBar/SearchBar.js';
-	// import TagCloud from './TagCloud/TagCloud.js';
-	// import SearchResults from './SearchResults/SearchResults.js';
-
 	var Home = function (_Component) {
 		_inherits(Home, _Component);
 
@@ -29802,7 +29798,7 @@
 			var _this = _possibleConstructorReturn(this, (Home.__proto__ || Object.getPrototypeOf(Home)).call(this, props));
 
 			_this.componentDidMount = function () {
-				document.getElementById('search-bar').focus();
+				return document.getElementById('search-bar').focus();
 			};
 
 			_this.goToSearchBar = function (e) {
@@ -29817,10 +29813,16 @@
 			return _this;
 		}
 
+		// Focus the #search-bar when the view loads.
+
+
+		// When user clicks "search repos" button, focus on #search-bar and
+		// alert user by state deiven styles. (Search bar pop/flash.)
+
+
 		_createClass(Home, [{
 			key: 'render',
 			value: function render() {
-
 				return _react2.default.createElement(
 					'div',
 					{ className: 'Home view' },
@@ -64400,7 +64402,7 @@
 
 	// TODO: Auto match owner/repo onPaste of URL.
 
-	// TODO: Validate input before repos/add request.
+	// TODO: Validate input before submitting add request.
 
 	// TODO: On add request, if repo exists, prompt user to view its chart.
 
@@ -64411,6 +64413,10 @@
 	    _classCallCheck(this, Add);
 
 	    var _this = _possibleConstructorReturn(this, (Add.__proto__ || Object.getPrototypeOf(Add)).call(this, props));
+
+	    _this.componentDidMount = function () {
+	      return document.getElementById('new-repo-input').focus();
+	    };
 
 	    _this.submitNewRepoByKeyPress = function (e) {
 	      if (e.which === 13) _this.submitNewRepo();
@@ -64450,23 +64456,18 @@
 	    return _this;
 	  }
 
+	  // When the view loads, focus on the #new-repo-input element.
+
+
+	  // When enter is pressed inside the #new-repo-input, fire the submit event.
+
+
+	  // Validate and pull owner and repo name from user's input.
+	  // Send owner/repo combo to server to be checked and added to watch list.
+	  // Depending on server response, alert the user with state driven styles.
+
+
 	  _createClass(Add, [{
-	    key: 'componentDidMount',
-
-
-	    // When the view loads, focus on the #new-repo-input element.
-	    value: function componentDidMount() {
-	      document.getElementById('new-repo-input').focus();
-	    }
-
-	    // When enter is pressed inside the #new-repo-input, fire the submit event.
-
-
-	    // Validate and pull owner and repo name from user's input.
-	    // Send owner/repo combo to server to be checked and added to watch list.
-	    // Depending on server response, alert the user with state driven styles.
-
-	  }, {
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(

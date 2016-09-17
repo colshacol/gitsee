@@ -1,30 +1,24 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router';
-
-// import SearchBar from './SearchBar/SearchBar.js';
-// import TagCloud from './TagCloud/TagCloud.js';
-// import SearchResults from './SearchResults/SearchResults.js';
+import React, { Component } from 'react'
+import { Link } from 'react-router'
 
 export default class Home extends Component {
 	constructor(props) {
-		super(props);
-	};
-
-	componentDidMount = () => {
-		document.getElementById('search-bar').focus();
+		super(props)
 	}
 
+	// Focus the #search-bar when the view loads.
+	componentDidMount = () => document.getElementById('search-bar').focus()
 
-
+	// When user clicks "search repos" button, focus on #search-bar and
+	// alert user by state deiven styles. (Search bar pop/flash.)
 	goToSearchBar = (e) => {
-		const searchBar = document.getElementById('search-bar');
-		searchBar.focus();
-		searchBar.classList.add('look-at-me');
-		setTimeout(() => searchBar.classList.remove('look-at-me'), 350);
+		const searchBar = document.getElementById('search-bar')
+		searchBar.focus()
+		searchBar.classList.add('look-at-me')
+		setTimeout(() => searchBar.classList.remove('look-at-me'), 350)
 	}
 
 	render() {
-
 		return (
 			<div className="Home view">
 				<header>

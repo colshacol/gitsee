@@ -3,7 +3,7 @@ import axios from 'axios'
 
 // TODO: Auto match owner/repo onPaste of URL.
 
-// TODO: Validate input before repos/add request.
+// TODO: Validate input before submitting add request.
 
 // TODO: On add request, if repo exists, prompt user to view its chart.
 
@@ -19,7 +19,7 @@ export default class Add extends Component {
   };
 
   // When the view loads, focus on the #new-repo-input element.
-  componentDidMount() { document.getElementById('new-repo-input').focus() }
+  componentDidMount = ( ) => document.getElementById('new-repo-input').focus()
 
   // When enter is pressed inside the #new-repo-input, fire the submit event.
   submitNewRepoByKeyPress = (e) => { if (e.which === 13) this.submitNewRepo() }
@@ -27,7 +27,7 @@ export default class Add extends Component {
   // Validate and pull owner and repo name from user's input.
   // Send owner/repo combo to server to be checked and added to watch list.
   // Depending on server response, alert the user with state driven styles.
-  submitNewRepo = () => {
+  submitNewRepo = ( ) => {
     const repoID = document.getElementById('new-repo-input').value
       .toLowerCase().replace(/\s+/g, '')
     // user = repoID.substr(0, repoID.indexOf('/')),
@@ -54,7 +54,7 @@ export default class Add extends Component {
     })
   }
 
-  render() {
+  render( ) {
     return (
       <div className="Add view">
         <div>
