@@ -127,7 +127,7 @@
 
 			_this.fetchRepoByClick = function () {
 				var searchBar = document.getElementById('search-bar');
-				var input = searchBar.value;
+				var input = searchBar.value.replace(/\s+/g, '');
 				if (input.length < 3) {
 					return;
 				}
@@ -64414,7 +64414,7 @@
 	    };
 
 	    _this.submitNewRepoByClick = function () {
-	      var repoID = document.getElementById('new-repo-input').value.toLowerCase();
+	      var repoID = document.getElementById('new-repo-input').value.toLowerCase().replace(/\s+/g, '');
 	      var user = repoID.substr(0, repoID.indexOf('/'));
 	      var repo = repoID.substr(repoID.indexOf('/') + 1);
 

@@ -35,7 +35,7 @@ class AppWindow extends Component {
 
 		this.fetchRepoByClick = ( ) => {
 			const searchBar = document.getElementById('search-bar')
-			const input = searchBar.value
+			const input = searchBar.value.replace(/\s+/g, '')
 			if (input.length < 3) { return }
 			axios.get('/repos/' + input.toLowerCase())
 				.then((res) => {
