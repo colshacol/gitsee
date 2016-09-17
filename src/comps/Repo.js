@@ -1,21 +1,16 @@
-import React, { Component } from 'react';
-import  { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import React, { Component } from 'react'
+import  { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts'
 
 export default class Repo extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {}
-  };
-
-  afn = () => {
-    alert('worked?');
-  };
+  }
 
   render() {
-    const repo = this.props.data;
-
+    // Use repo history object to populate chart.
     const chartData = (() => {
-      const data = [];
+      const data = []
       const historyLen = this.props.history.length;
       for (let i = historyLen - 1; i >= 0; i--) {
         data.push({
@@ -23,15 +18,15 @@ export default class Repo extends Component {
           stars: this.props.history[i].stars,
           watchers: this.props.history[i].watchers,
           forks: this.props.history[i].forks,
-        });
-      };
+        })
+      }
       return data;
-    })();
+    })()
 
     return (
       <div className="Repo component">
         <div className="names">
-          <p onClick={this.afn}>{this.props.owner}</p>
+          <p>{this.props.owner}</p>
           <p>{this.props.reponame}</p>
         </div>
         <div className="watch-date">

@@ -29987,10 +29987,6 @@
 
 	    var _this = _possibleConstructorReturn(this, (Repo.__proto__ || Object.getPrototypeOf(Repo)).call(this, props));
 
-	    _this.afn = function () {
-	      alert('worked?');
-	    };
-
 	    _this.state = {};
 	    return _this;
 	  }
@@ -30000,8 +29996,7 @@
 	    value: function render() {
 	      var _this2 = this;
 
-	      var repo = this.props.data;
-
+	      // Use repo history object to populate chart.
 	      var chartData = function () {
 	        var data = [];
 	        var historyLen = _this2.props.history.length;
@@ -30012,7 +30007,7 @@
 	            watchers: _this2.props.history[i].watchers,
 	            forks: _this2.props.history[i].forks
 	          });
-	        };
+	        }
 	        return data;
 	      }();
 
@@ -30024,7 +30019,7 @@
 	          { className: 'names' },
 	          _react2.default.createElement(
 	            'p',
-	            { onClick: this.afn },
+	            null,
 	            this.props.owner
 	          ),
 	          _react2.default.createElement(
