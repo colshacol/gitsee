@@ -40,6 +40,7 @@
     "style-loader": "^0.13.1",
     "stylus": "^0.54.5",
     "stylus-loader": "^2.2.0",
+    "twilio": "^2.9.3",
     "webpack": "^1.13.1",
     "webpack-dev-server": "^1.14.1"
   }
