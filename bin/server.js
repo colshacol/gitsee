@@ -50,7 +50,7 @@ function onListening() {
     http.get('http://gitsee.herokuapp.com/', (res) => {
       console.log('AWAKEN, MY DEMONS!')
     })
-  }, 30000)
+  }, 300000)
 
   const date = new Date(),
     time = ((date.getHours() > 12)
