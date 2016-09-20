@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router'
+import { Link, browserHistory } from 'react-router'
 import './Home.styl'
+
+import userStore from '../../stores/UserStore'
 
 export default class Home extends Component {
 	constructor(props) {
@@ -19,6 +21,14 @@ export default class Home extends Component {
 		setTimeout(() => searchBar.classList.remove('look-at-me'), 350)
 	}
 
+	goToLogin = () => {
+		if (userStore.loggedIn) {
+			browserHistory.push('/dashboard')
+		} else {
+			browserHistory.push('/login')
+		}
+	}
+
 	render() {
 		return (
 			<div className="Home view">
@@ -33,6 +43,10 @@ export default class Home extends Component {
 							<div className="button-holder">
 								<button onClick={this.goToSearchBar}>Search Repos</button>
 								<button><Link to="/add">Add a Repo</Link></button>
+							</div>
+							<div className="button-holder">
+								<button onClick={this.goToLogin}>Login</button>
+								<button onClick={this.goToRegister}>Register</button>
 							</div>
 							<div className="button-holder">
 								<button><a href="https://github.com/colshacol/gitsee/tree/dev">Contribute</a></button>

@@ -35,8 +35,12 @@ function login(req, res, next) {
     // If there is only one and the passwords match, send the
     // appropriate data to log the user in.
     if (doc.length === 1 && doc[0].password === password) {
-      
-      res.send('Loggedafaega in!')
+      const userData = doc[0]
+      userData.password = '*'
+      res.send({
+        status: 'success',
+        userData: userData
+      })
     }
   })
 }

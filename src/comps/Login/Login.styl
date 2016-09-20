@@ -2,6 +2,35 @@
 @import '../../styles/grid'
 @import '../../styles/mixins'
 
-.Login {
+.Login.view {
+  margin-top 100px
+}
 
+.Login form {
+  margin-top 15px
+  contain(90%, 480px)
+  marginCenter()
+  column(start, center)
+}
+
+.Login form input {
+  margin-bottom 20px
+  padding 12px 15px
+  border 1px solid rgba(0,0,0,0.1)
+  contain(90%, 450px)
+  marginCenter()
+  font-size 1.8rem
+  color PURPLE2
+  font-weight 500
+}
+
+.Login form p {
+  marginCenter()
+  margin-bottom 20px
+  font-size 1.4rem
+  color PURPLE2
+}
+
+.Login form button {
+  marginCenter()
 }

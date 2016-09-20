@@ -13,6 +13,9 @@ import Repo from './comps/Repo/Repo'
 import Add from './comps/Add/Add'
 import Login from './comps/Login/Login'
 import Register from './comps/Register/Register'
+import Dash from './comps/Dash/Dash'
+
+import userStore from './stores/UserStore'
 
 class AppWindow extends Component {
 	constructor() {
@@ -70,6 +73,14 @@ class AppWindow extends Component {
 		}
 	}
 
+	goToHome = () => {
+		if (userStore.loggedIn) {
+			browserHistory.push('/dashboard')
+		} else {
+			browserHistory.push('/')
+		}
+	}
+
 	render() {
 		const childrenWithProps = React.Children.map(this.props.children,
 			(child) => React.cloneElement(child, {
@@ -81,7 +92,7 @@ class AppWindow extends Component {
 			<div className="AppWindow view">
 				<nav>
 					<div>
-						<p className="logo"><Link to="/">GIT<span>SEE</span></Link></p>
+						<p className="logo" onClick={this.goToHome}>GIT<span>SEE</span></p>
 						<input onKeyUp={this.fetchRepoByKeypress} className={this.state.searchAlert} id="search-bar" placeholder={this.state.searchPlaceholder}/>
 						<img onClick={this.fetchRepoByClick} src="images/search.svg" />
 					</div>
@@ -101,6 +112,7 @@ ReactDOM.render(
 			<Route path="/add" component={Add}></Route>
 			<Route path="/login" component={Login}></Route>
 			<Route path="/register" component={Register}></Route>
+			<Route path="/dashboard" component={Dash}></Route>
 		</Route>
 	</Router>,
 	document.getElementById('root')
