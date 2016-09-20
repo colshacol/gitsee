@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node ./bin/server.js",
     "start hero": "node ./bin/server.js",
-    "go": "nodemon ./bin/server.js",    
+    "go": "nodemon ./bin/server.js"
   },
   "dependencies": {
     "axios": "^0.13.1",
