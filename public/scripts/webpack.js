@@ -144,7 +144,7 @@
 						})
 					});
 
-					_reactRouter.browserHistory.push('/SERP');
+					_reactRouter.browserHistory.push('/SERP/' + repo.owner + '/' + repo.reponame);
 					// setTimeout(() => console.log(this.state.activeRepo), 1000)
 				}).catch(function (err) {
 					_this.setState({
@@ -218,7 +218,7 @@
 			_reactRouter.Route,
 			{ path: '/', component: AppWindow },
 			_react2.default.createElement(_reactRouter.IndexRoute, { component: _Home2.default }),
-			_react2.default.createElement(_reactRouter.Route, { path: '/SERP', component: _SERP2.default }),
+			_react2.default.createElement(_reactRouter.Route, { path: '/SERP/:owner/:reponame', component: _SERP2.default }),
 			_react2.default.createElement(_reactRouter.Route, { path: '/add', component: _Add2.default })
 		)
 	), document.getElementById('root'));

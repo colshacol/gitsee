@@ -51,7 +51,7 @@ class AppWindow extends Component {
 												/>
 					})
 
-					browserHistory.push('/SERP')
+					browserHistory.push(`/SERP/${repo.owner}/${repo.reponame}`)
 					// setTimeout(() => console.log(this.state.activeRepo), 1000)
 				})
 
@@ -100,7 +100,7 @@ ReactDOM.render(
 	<Router history={browserHistory}>
 		<Route path="/" component={AppWindow}>
 			<IndexRoute component={Home}></IndexRoute>
-			<Route path="/SERP" component={SERP}></Route>
+			<Route path="/SERP/:owner/:reponame" component={SERP}></Route>
 			<Route path="/add" component={Add}></Route>
 		</Route>
 	</Router>,

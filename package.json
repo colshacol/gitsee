@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/server.js",
+    "start": "nodemon ./bin/server.js",
     "start hero": "node ./bin/server.js"
   },
   "dependencies": {
