@@ -8,7 +8,8 @@ const express = require('express');
 const routes = require('./routes/index'),
       repos = require('./routes/repos'),
       webpack = require('./routes/webpack'),
-      status = require('./routes/status')
+      status = require('./routes/status'),
+      users = require('./routes/users')
 
 const app = express()
 
@@ -21,6 +22,7 @@ app.use('/', routes)
 app.use('/repos', repos)
 app.use('/webpack', webpack)
 app.use('/status', status)
+app.use('/users', users)
 
 app.use(function(req, res, next) {
   var err = new Error('Not Found')

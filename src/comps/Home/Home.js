@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router'
+import './Home.styl'
 
 export default class Home extends Component {
 	constructor(props) {
@@ -32,10 +33,6 @@ export default class Home extends Component {
 							<div className="button-holder">
 								<button onClick={this.goToSearchBar}>Search Repos</button>
 								<button><Link to="/add">Add a Repo</Link></button>
-							</div>
-							<div className="button-holder">
-								<Link to="/login"><button>Login</button></Link>
-								<Link to="/register"><button>Register</button></Link>
 							</div>
 							<div className="button-holder">
 								<button><a href="https://github.com/colshacol/gitsee/tree/dev">Contribute</a></button>

@@ -1,0 +1,5 @@
+{
+  "components" : "./src/comps",
+  "templatePath" : "./src/comps",
+  "css" : "styl"
+}

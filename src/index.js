@@ -5,17 +5,14 @@ import axios from 'axios'
 import Tappable from 'react-tappable'
 
 import './styles/reset.styl'
-import './styles/grid.styl'
-import './styles/index.styl'
-import './styles/SERP.styl'
-import './styles/Repo.styl'
-import './styles/Home.styl'
-import './styles/Add.styl'
+import './index.styl'
 
-import Home from './views/Home'
-import SERP from './views/SERP'
-import Repo from './comps/Repo'
-import Add from './views/Add.js'
+import Home from './comps/Home/Home'
+import SERP from './comps/SERP/SERP'
+import Repo from './comps/Repo/Repo'
+import Add from './comps/Add/Add'
+import Login from './comps/Login/Login'
+import Register from './comps/Register/Register'
 
 class AppWindow extends Component {
 	constructor() {
@@ -102,6 +99,8 @@ ReactDOM.render(
 			<IndexRoute component={Home}></IndexRoute>
 			<Route path="/SERP/:owner/:reponame" component={SERP}></Route>
 			<Route path="/add" component={Add}></Route>
+			<Route path="/login" component={Login}></Route>
+			<Route path="/register" component={Register}></Route>
 		</Route>
 	</Router>,
 	document.getElementById('root')

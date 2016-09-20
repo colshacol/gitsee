@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import Repo from '../comps/Repo'
+import Repo from '../Repo/Repo'
+import './SERP.styl'
 
 export default class SERP extends Component {
   constructor(props) {
