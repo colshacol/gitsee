@@ -1,14 +1,20 @@
 #!/usr/bin/env node
 
-const app = require('../app');
-const debug = require('debug')('nusync_server:server');
-const http = require('http');
-const mongo = require('mongojs');
+const app = require('../app')
+const debug = require('debug')('nusync_server:server')
+const http = require('http')
+const mongo = require('mongojs')
 // const token = require('./token')
-const db = mongo(`mongodb://gitsee:MarleyMC__14@ds019746.mlab.com:19746/gitsee`, ['repos']);
-const schedule = require('node-schedule');
-const githubBlast = require('./schedule');
-const fs = require('fs');
+const db = mongo(
+  `mongodb://gitsee:MarleyMC__14@ds019746.mlab.com:19746/gitsee`,
+  ['repos']
+)
+
+const schedule = require('node-schedule')
+const githubBlast = require('./schedule')
+const fs = require('fs')
+
+const removeDuplicates = require('./dbRemove')
 
 const port = process.env.PORT || 1234;
 app.set('port', port);
@@ -45,6 +51,8 @@ function onError(error) {
 
 function onListening() {
   githubBlast()
+
+  // removeDuplicates('9/17/2016')
 
   setInterval(() => {
     http.get('http://gitsee.herokuapp.com/', (res) => {

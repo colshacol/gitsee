@@ -117,12 +117,3 @@ ReactDOM.render(
 	</Router>,
 	document.getElementById('root')
 )
-
-
-// const childrenWithProps = React.Children.map(this.props.children,
-//  (child) => React.cloneElement(child, {
-// 	 logInSuccess: this.logInSuccess,
-// 	 logOut: this.logOut,
-// 	 loggedIn: this.state.loggedIn
-//  })
-// );
