@@ -29687,12 +29687,12 @@
 									{ className: 'button-holder' },
 									_react2.default.createElement(
 										'button',
-										{ onClick: this.goToLogin },
+										{ onClick: this.goToLogin, disabled: true },
 										'Login'
 									),
 									_react2.default.createElement(
 										'button',
-										{ onClick: this.goToRegister },
+										{ onClick: this.goToRegister, disabled: true },
 										'Register'
 									)
 								),
