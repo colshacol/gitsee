@@ -9,8 +9,8 @@ const db = mongo(`mongodb://gitsee:MarleyMC__14@ds019746.mlab.com:19746/gitsee`,
 // for production: run blast every 24 hours.
 const rule = new schedule.RecurrenceRule()
 rule.dayOfWeek = [0,1,2,3,4,5,6]
-rule.hour = 0;
-rule.minute = 1;
+rule.hour = 5;
+rule.minute = 8;
 rule.second = 30;
 
 const blast = () => {
