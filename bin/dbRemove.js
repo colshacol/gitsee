@@ -1,3 +1,5 @@
+'use strict'
+
 const schedule = require('node-schedule')
 const mongo = require('mongojs')
 const db = mongo(`mongodb://gitsee:MarleyMC__14@ds019746.mlab.com:19746/gitsee`, ['repos'])
