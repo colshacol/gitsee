@@ -32726,7 +32726,7 @@
 
 	      var starsAverage = Math.floor(starsTotal / stars.length);
 
-	      var alternativeView = this.state.mainChartActive ? 'main' : 'relative';
+	      var alternativeView = !this.state.mainChartActive ? 'main' : 'relative';
 
 	      return _react2.default.createElement(
 	        'div',

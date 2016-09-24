@@ -74,7 +74,7 @@ export default class Repo extends Component {
 
     const starsAverage = Math.floor(starsTotal / stars.length)
 
-    const alternativeView = (this.state.mainChartActive) ? 'main' : 'relative';
+    const alternativeView = (!this.state.mainChartActive) ? 'main' : 'relative';
 
     return (
       <div className="Repo component">
