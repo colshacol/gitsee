@@ -13,7 +13,8 @@ router.get('/simple', sendReposSimple)
 router.get('/count', countRepos)
 router.get('/add/:username/:reponame', addRepo)
 router.get('/:username/:reponame', getRepo)
-router.get('/undo', undoLastBlast)
+// router.get('/undo', undoLastBlast)
+router.get('/clean/:month/:day/:year', removeDuplicates)
 
 module.exports = router;
 
@@ -137,37 +138,39 @@ function getRepo(req, res, next) {
   })
 };
 
-function undoLastBlast(req, res, next) {
-  res.send('No.')
-  return;
-  db.repos.find((err, docs) => {
-    if (err) {
-      console.log('UNDO LAST BLAST: Failed to query DB.')
-      return;
-    }
 
-    if (!docs) {
-      console.log('No docs found in DB.')
-      return;
-    }
 
-    const docsLen = docs.length;
-    for(let i = 0; i < docsLen; i++) {
-      const doc = docs[i]
-      const history = doc.history;
-      console.log(history)
-      if (history.length <= 1) return;
-      const newHistory = history
-      console.log(doc.repo);
-      console.log(history)
-      console.log(newHistory)
+function removeDuplicates(req, res, next) {
+  const date = `${req.params.month}/${req.params.day}/${req.params.year}`
+  db.repos.find({}, (err, docs) => {
+    for (let i = 0; i < docs.length; i++) {
+      const repo = docs[i]
+      const history = repo.history
+      const duplicates = history.filter((entry) => {
+        return (entry.date === date)
+      })
+      // console.log('\n\n\n\n', duplicates)
+
+      const sortedHistory = duplicates.sort((a, b) => {
+        return a.stars - b.stars
+      })
+
+      const historyToSave = sortedHistory[0]
+
+      const newHistory = history.filter((entry, i) => {
+        return (entry.date !== date || (entry.date === date && entry === historyToSave))
+      })
+
+      repo.history = newHistory;
+
       db.repos.findAndModify({
-        query: { repo: doc.repo },
-        update: { $set: { history: [newHistory] } },
+        query: { repo: repo.repo },
+        update: { $set: { history: newHistory } },
         new: true
       }, (err, doc, lastErrorObject) => {
-        console.log(doc)
+        if (doc) console.log(`${repo.repo} | ${date} | Cleaned.`);
       })
     }
- })
+  })
+
 }

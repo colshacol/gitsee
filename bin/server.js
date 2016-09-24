@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
 const app = require('../app')
-const debug = require('debug')('nusync_server:server')
 const http = require('http')
 const mongo = require('mongojs')
 // const token = require('./token')
@@ -13,8 +12,6 @@ const db = mongo(
 const schedule = require('node-schedule')
 const githubBlast = require('./schedule')
 const fs = require('fs')
-
-const removeDuplicates = require('./dbRemove')
 
 const port = process.env.PORT || 1234;
 app.set('port', port);
@@ -51,8 +48,6 @@ function onError(error) {
 
 function onListening() {
   githubBlast()
-
-  // removeDuplicates('9/17/2016')
 
   setInterval(() => {
     http.get('http://gitsee.herokuapp.com/', (res) => {
