@@ -154,7 +154,8 @@
 							owner: repo.owner,
 							reponame: repo.reponame,
 							dateAdded: repo.dateAdded,
-							history: repo.history
+							history: repo.history,
+							description: repo.description
 						})
 					});
 
@@ -32662,29 +32663,70 @@
 
 	    var _this = _possibleConstructorReturn(this, (Repo.__proto__ || Object.getPrototypeOf(Repo)).call(this, props));
 
-	    _this.state = {};
+	    _this.switchChart = function () {
+	      _this.setState({
+	        mainChartActive: !_this.state.mainChartActive
+	      });
+	    };
+
+	    _this.state = {
+	      mainChartActive: false
+	    };
 	    return _this;
 	  }
 
 	  _createClass(Repo, [{
 	    key: 'render',
 	    value: function render() {
-	      var _this2 = this;
+	      var historyLen = this.props.history.length;
 
-	      // Use repo history object to populate chart.
-	      var chartData = function () {
-	        var data = [];
-	        var historyLen = _this2.props.history.length;
-	        for (var i = historyLen - 1; i >= 0; i--) {
-	          data.push({
-	            date: _this2.props.history[i].date,
-	            stars: _this2.props.history[i].stars,
-	            watchers: _this2.props.history[i].watchers,
-	            forks: _this2.props.history[i].forks
-	          });
+	      var chart = [];
+	      var stars = [];
+	      var forks = [];
+	      var watchers = [];
+
+	      for (var i = historyLen - 1, x = 0; i >= 0; i--) {
+	        if (i !== historyLen - 1) {
+	          stars.push(this.props.history[i + 1].stars - this.props.history[i].stars);
+
+	          watchers.push(this.props.history[i + 1].watchers - this.props.history[i].watchers);
+
+	          forks.push(this.props.history[i + 1].forks - this.props.history[i].forks);
 	        }
-	        return data;
-	      }();
+
+	        if (this.state.mainChartActive) {
+	          chart.push({
+	            date: this.props.history[i].date,
+	            stars: this.props.history[i].stars,
+	            watchers: this.props.history[i].watchers,
+	            forks: this.props.history[i].forks
+	          });
+	        } else {
+	          if (i !== historyLen - 1) {
+	            console.log('adding ' + this.props.history[i].date);
+	            console.log(stars);
+	            console.log(x);
+	            chart.push({
+	              date: this.props.history[i].date,
+	              stars: stars[x - 1],
+	              watchers: watchers[x - 1],
+	              forks: forks[x - 1]
+	            });
+	          }
+	        }
+
+	        x += 1;
+	      }
+
+	      console.log(chart);
+
+	      var starsTotal = stars.reduce(function (total, num) {
+	        return total + num;
+	      });
+
+	      var starsAverage = Math.floor(starsTotal / stars.length);
+
+	      var alternativeView = this.state.mainChartActive ? 'main' : 'relative';
 
 	      return _react2.default.createElement(
 	        'div',
@@ -32711,6 +32753,22 @@
 	            null,
 	            'watching since ',
 	            this.props.dateAdded
+	          ),
+	          _react2.default.createElement(
+	            'p',
+	            { onClick: this.switchChart },
+	            'Switch to ',
+	            alternativeView,
+	            ' view'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'description' },
+	          _react2.default.createElement(
+	            'p',
+	            null,
+	            this.props.description
 	          )
 	        ),
 	        _react2.default.createElement(
@@ -32723,7 +32781,7 @@
 	          { className: 'chart' },
 	          _react2.default.createElement(
 	            _recharts.LineChart,
-	            { data: chartData, width: 745, height: 275,
+	            { data: chart, width: 745, height: 275,
 	              margin: { top: 30, right: 70, left: 30, bottom: 20 } },
 	            _react2.default.createElement(_recharts.XAxis, { dataKey: 'date' }),
 	            _react2.default.createElement(_recharts.YAxis, null),
@@ -32733,6 +32791,19 @@
 	            _react2.default.createElement(_recharts.Line, { type: 'monotone', dataKey: 'stars', stroke: '#8884d8', activeDot: { r: 8 } }),
 	            _react2.default.createElement(_recharts.Line, { type: 'monotone', dataKey: 'watchers', stroke: '#82ca9d' }),
 	            _react2.default.createElement(_recharts.Line, { type: 'monotone', dataKey: 'forks', stroke: '#ee6059' })
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'details' },
+	          _react2.default.createElement(
+	            'p',
+	            null,
+	            'Average daily growth since ',
+	            this.props.dateAdded,
+	            ': ',
+	            starsAverage,
+	            ' stars per day.'
 	          )
 	        )
 	      );
@@ -67076,7 +67147,7 @@
 
 
 	// module
-	exports.push([module.id, ".row {\n  display: flex;\n}\n.column {\n  display: flex;\n  flex-direction: column;\n}\n.row.x-center,\n.column.y-center {\n  justify-content: center;\n}\n.row.y-center,\n.column.x-center {\n  align-items: center;\n}\n.row.space-around,\n.column.space-around {\n  justify-content: space-around;\n}\n.row.space-between,\n.column.space-between {\n  justify-content: space-between;\n}\n.row.push-children,\n.column.push-children {\n  justify-content: flex-end;\n}\n.row.pull-children,\n.column.pull-children {\n  justify-content: flex-start;\n}\n.wrap {\n  flex-wrap: wrap;\n}\n.nowrap {\n  flex-wrap: nowrap;\n}\n.justify-children-center {\n  justify-content: center;\n}\n.justify-children-start {\n  justify-content: flex-start;\n}\n.justify-children-end {\n  justify-content: flex-end;\n}\n.justify-children-between {\n  justify-content: space-between;\n}\n.justify-children-around {\n  justify-content: space-around;\n}\n.justify-children-stretch {\n  justify-content: stretch;\n}\n.align-children-center {\n  align-items: center;\n}\n.align-children-stretch {\n  align-items: stretch;\n}\n.align-children-start {\n  align-items: flex-start;\n}\n.align-children-end {\n  align-items: flex-end;\n}\n.align-children-baseline {\n  align-items: baseline;\n}\n.align-self-center {\n  align-self: center;\n}\n.align-self-stretch {\n  align-self: stretch;\n}\n.align-self-start {\n  align-self: flex-start;\n}\n.align-self-end {\n  align-self: flex-end;\n}\n.align-self-baseline {\n  align-self: baseline;\n}\n.align-rows-center {\n  align-content: center;\n}\n.align-rows-start {\n  align-content: flex-start;\n}\n.align-rows-end {\n  align-content: flex-end;\n}\n.align-rows-between {\n  align-content: space-between;\n}\n.align-rows-stretch {\n  align-content: stretch;\n}\n.all-0 {\n  display: none;\n}\n.all-1 {\n  width: 7.833%;\n}\n.all-2 {\n  width: 16.166%;\n}\n.all-3 {\n  width: 24.5%;\n}\n.all-4 {\n  width: 32.833%;\n}\n.all-5 {\n  width: 41.166%;\n}\n.all-5_5 {\n  width: 45.333%;\n}\n.all-6 {\n  width: 49.5%;\n}\n.all-7 {\n  width: 57.833%;\n}\n.all-8 {\n  width: 66.166%;\n}\n.all-9 {\n  width: 74.5%;\n}\n.all-10 {\n  width: 82.833%;\n}\n.all-11 {\n  width: 91.166%;\n}\n.all-12 {\n  width: 100%;\n}\n@media (max-width: 480px) {\n  .xs-0 {\n    display: none;\n  }\n  .xs-1 {\n    width: 7.833%;\n  }\n  .xs-2 {\n    width: 16.166%;\n  }\n  .xs-3 {\n    width: 24.5%;\n  }\n  .xs-4 {\n    width: 32.833%;\n  }\n  .xs-5 {\n    width: 41.166%;\n  }\n  .xs-5_5 {\n    width: 45.333%;\n  }\n  .xs-6 {\n    width: 49.5%;\n  }\n  .xs-7 {\n    width: 57.833%;\n  }\n  .xs-8 {\n    width: 66.166%;\n  }\n  .xs-9 {\n    width: 74.5%;\n  }\n  .xs-10 {\n    width: 82.833%;\n  }\n  .xs-11 {\n    width: 91.166%;\n  }\n  .xs-12 {\n    width: 100%;\n  }\n  .xs-column {\n    display: flex;\n    flex-direction: column;\n  }\n  .xs-row {\n    display: flex;\n  }\n}\n@media (min-width: 481px) and (max-width: 768px) {\n  .sm-0 {\n    display: none;\n  }\n  .sm-1 {\n    width: 7.833%;\n  }\n  .sm-2 {\n    width: 16.166%;\n  }\n  .sm-3 {\n    width: 24.5%;\n  }\n  .sm-4 {\n    width: 32.833%;\n  }\n  .sm-5 {\n    width: 41.166%;\n  }\n  .sm-5_5 {\n    width: 45.333%;\n  }\n  .sm-6 {\n    width: 49.5%;\n  }\n  .sm-7 {\n    width: 57.833%;\n  }\n  .sm-8 {\n    width: 66.166%;\n  }\n  .sm-9 {\n    width: 74.5%;\n  }\n  .sm-10 {\n    width: 82.833%;\n  }\n  .sm-11 {\n    width: 91.166%;\n  }\n  .sm-12 {\n    width: 100%;\n  }\n  .sm-column {\n    display: flex;\n    flex-direction: column;\n  }\n  .sm-row {\n    display: flex;\n    flex-direction: row;\n  }\n}\n@media (min-width: 769px) and (max-width: 992px) {\n  .md-0 {\n    display: none;\n  }\n  .md-1 {\n    width: 7.833%;\n  }\n  .md-2 {\n    width: 16.166%;\n  }\n  .md-3 {\n    width: 24.5%;\n  }\n  .md-4 {\n    width: 32.833%;\n  }\n  .md-5 {\n    width: 41.166%;\n  }\n  .md-5_5 {\n    width: 45.333%;\n  }\n  .md-6 {\n    width: 49.5%;\n  }\n  .md-7 {\n    width: 57.833%;\n  }\n  .md-8 {\n    width: 66.166%;\n  }\n  .md-9 {\n    width: 74.5%;\n  }\n  .md-10 {\n    width: 82.833%;\n  }\n  .md-11 {\n    width: 91.166%;\n  }\n  .md-12 {\n    width: 100%;\n  }\n  .md-column {\n    display: flex;\n    flex-direction: column;\n  }\n  .md-row {\n    display: flex;\n    flex-direction: row;\n  }\n}\n@media (min-width: 993px) and (max-width: 1200px) {\n  .lg-0 {\n    display: none;\n  }\n  .lg-1 {\n    width: 7.833%;\n  }\n  .lg-2 {\n    width: 16.166%;\n  }\n  .lg-3 {\n    width: 24.5%;\n  }\n  .lg-4 {\n    width: 32.833%;\n  }\n  .lg-5 {\n    width: 41.166%;\n  }\n  .lg-5_5 {\n    width: 45.333%;\n  }\n  .lg-6 {\n    width: 49.5%;\n  }\n  .lg-7 {\n    width: 57.833%;\n  }\n  .lg-8 {\n    width: 66.166%;\n  }\n  .lg-9 {\n    width: 74.5%;\n  }\n  .lg-10 {\n    width: 82.833%;\n  }\n  .lg-11 {\n    width: 91.166%;\n  }\n  .lg-12 {\n    width: 100%;\n  }\n  .lg-column {\n    display: flex;\n    flex-direction: column;\n  }\n  .lg-row {\n    display: flex;\n    flex-direction: row;\n  }\n}\n@media (min-width: 1201px) {\n  .xl-0 {\n    display: none;\n  }\n  .xl-1 {\n    width: 7.833%;\n  }\n  .xl-2 {\n    width: 16.166%;\n  }\n  .xl-3 {\n    width: 24.5%;\n  }\n  .xl-4 {\n    width: 32.833%;\n  }\n  .xl-5 {\n    width: 41.166%;\n  }\n  .xl-5_5 {\n    width: 45.333%;\n  }\n  .xl-6 {\n    width: 49.5%;\n  }\n  .xl-7 {\n    width: 57.833%;\n  }\n  .xl-8 {\n    width: 66.166%;\n  }\n  .xl-9 {\n    width: 74.5%;\n  }\n  .xl-10 {\n    width: 82.833%;\n  }\n  .xl-11 {\n    width: 91.166%;\n  }\n  .xl-12 {\n    width: 100%;\n  }\n  .xl-column {\n    display: flex;\n    flex-direction: column;\n  }\n  .xl-row {\n    display: flex;\n    flex-direction: row;\n  }\n}\n.max-480 {\n  width: 100%;\n  max-width: 480px;\n}\n.max-768 {\n  width: 100%;\n  max-width: 768px;\n}\n.max-992 {\n  width: 100%;\n  max-width: 992px;\n}\n.max-1200 {\n  width: 100%;\n  max-width: 1200px;\n}\n.Repo {\n  display: flex;\n  flex-direction: column;\n  align-items: flex-start;\n  justify-content: flex-start;\n  width: 95%;\n  max-width: 768px;\n  background: #fff;\n  margin-top: 25px;\n  padding-top: 20px;\n  padding-bottom: 25px;\n}\n.Repo .names {\n  display: flex;\n  flex-direction: row;\n  justify-content: flex-start;\n  align-items: center;\n  flex-wrap: wrap;\n  margin-left: 20px;\n}\n.Repo .names p {\n  font-weight: 500;\n  letter-spacing: 2px;\n  padding: 5px 10px;\n  font-size: 1.6rem;\n  background: #9370db;\n  text-transform: uppercase;\n  color: #fff;\n  box-shadow: 0 2px 0 #483d8b;\n  border-radius: 4px;\n  margin-bottom: 10px;\n}\n.Repo .names p:first-of-type {\n  margin-right: 10px;\n}\n.Repo .watch-date {\n  margin-left: 20px;\n}\n.Repo .watch-date p {\n  font-weight: 700;\n  letter-spacing: 2px;\n  padding: 5px 10px;\n  font-size: 1.2rem;\n  background: #43f79d;\n  text-transform: uppercase;\n  color: #fff;\n  box-shadow: 0 2px 0 #38d184;\n  border-radius: 4px;\n  margin-bottom: 10px;\n}\n.Repo .scroll-advice {\n  font-weight: 300;\n  margin-left: auto;\n  margin-right: auto;\n  margin-top: 25px;\n  font-size: 1.4rem;\n}\n@media screen and (min-width: 480px) and (max-width: 1999px) {\n  .Repo .scroll-advice {\n    display: none;\n  }\n}\n.Repo .chart {\n  width: 100%;\n  overflow-x: scroll;\n  display: flex;\n  flex-direction: column;\n  align-items: flex-start;\n  justify-content: center;\n  padding-bottom: 15px;\n}\n.Repo .chart .recharts-default-tooltip {\n  display: flex;\n  flex-direction: column;\n  align-items: flex-start;\n  justify-content: center;\n}\n.Repo .chart .recharts-legend-wrapper {\n  bottom: 0px !important;\n}\n", ""]);
+	exports.push([module.id, ".row {\n  display: flex;\n}\n.column {\n  display: flex;\n  flex-direction: column;\n}\n.row.x-center,\n.column.y-center {\n  justify-content: center;\n}\n.row.y-center,\n.column.x-center {\n  align-items: center;\n}\n.row.space-around,\n.column.space-around {\n  justify-content: space-around;\n}\n.row.space-between,\n.column.space-between {\n  justify-content: space-between;\n}\n.row.push-children,\n.column.push-children {\n  justify-content: flex-end;\n}\n.row.pull-children,\n.column.pull-children {\n  justify-content: flex-start;\n}\n.wrap {\n  flex-wrap: wrap;\n}\n.nowrap {\n  flex-wrap: nowrap;\n}\n.justify-children-center {\n  justify-content: center;\n}\n.justify-children-start {\n  justify-content: flex-start;\n}\n.justify-children-end {\n  justify-content: flex-end;\n}\n.justify-children-between {\n  justify-content: space-between;\n}\n.justify-children-around {\n  justify-content: space-around;\n}\n.justify-children-stretch {\n  justify-content: stretch;\n}\n.align-children-center {\n  align-items: center;\n}\n.align-children-stretch {\n  align-items: stretch;\n}\n.align-children-start {\n  align-items: flex-start;\n}\n.align-children-end {\n  align-items: flex-end;\n}\n.align-children-baseline {\n  align-items: baseline;\n}\n.align-self-center {\n  align-self: center;\n}\n.align-self-stretch {\n  align-self: stretch;\n}\n.align-self-start {\n  align-self: flex-start;\n}\n.align-self-end {\n  align-self: flex-end;\n}\n.align-self-baseline {\n  align-self: baseline;\n}\n.align-rows-center {\n  align-content: center;\n}\n.align-rows-start {\n  align-content: flex-start;\n}\n.align-rows-end {\n  align-content: flex-end;\n}\n.align-rows-between {\n  align-content: space-between;\n}\n.align-rows-stretch {\n  align-content: stretch;\n}\n.all-0 {\n  display: none;\n}\n.all-1 {\n  width: 7.833%;\n}\n.all-2 {\n  width: 16.166%;\n}\n.all-3 {\n  width: 24.5%;\n}\n.all-4 {\n  width: 32.833%;\n}\n.all-5 {\n  width: 41.166%;\n}\n.all-5_5 {\n  width: 45.333%;\n}\n.all-6 {\n  width: 49.5%;\n}\n.all-7 {\n  width: 57.833%;\n}\n.all-8 {\n  width: 66.166%;\n}\n.all-9 {\n  width: 74.5%;\n}\n.all-10 {\n  width: 82.833%;\n}\n.all-11 {\n  width: 91.166%;\n}\n.all-12 {\n  width: 100%;\n}\n@media (max-width: 480px) {\n  .xs-0 {\n    display: none;\n  }\n  .xs-1 {\n    width: 7.833%;\n  }\n  .xs-2 {\n    width: 16.166%;\n  }\n  .xs-3 {\n    width: 24.5%;\n  }\n  .xs-4 {\n    width: 32.833%;\n  }\n  .xs-5 {\n    width: 41.166%;\n  }\n  .xs-5_5 {\n    width: 45.333%;\n  }\n  .xs-6 {\n    width: 49.5%;\n  }\n  .xs-7 {\n    width: 57.833%;\n  }\n  .xs-8 {\n    width: 66.166%;\n  }\n  .xs-9 {\n    width: 74.5%;\n  }\n  .xs-10 {\n    width: 82.833%;\n  }\n  .xs-11 {\n    width: 91.166%;\n  }\n  .xs-12 {\n    width: 100%;\n  }\n  .xs-column {\n    display: flex;\n    flex-direction: column;\n  }\n  .xs-row {\n    display: flex;\n  }\n}\n@media (min-width: 481px) and (max-width: 768px) {\n  .sm-0 {\n    display: none;\n  }\n  .sm-1 {\n    width: 7.833%;\n  }\n  .sm-2 {\n    width: 16.166%;\n  }\n  .sm-3 {\n    width: 24.5%;\n  }\n  .sm-4 {\n    width: 32.833%;\n  }\n  .sm-5 {\n    width: 41.166%;\n  }\n  .sm-5_5 {\n    width: 45.333%;\n  }\n  .sm-6 {\n    width: 49.5%;\n  }\n  .sm-7 {\n    width: 57.833%;\n  }\n  .sm-8 {\n    width: 66.166%;\n  }\n  .sm-9 {\n    width: 74.5%;\n  }\n  .sm-10 {\n    width: 82.833%;\n  }\n  .sm-11 {\n    width: 91.166%;\n  }\n  .sm-12 {\n    width: 100%;\n  }\n  .sm-column {\n    display: flex;\n    flex-direction: column;\n  }\n  .sm-row {\n    display: flex;\n    flex-direction: row;\n  }\n}\n@media (min-width: 769px) and (max-width: 992px) {\n  .md-0 {\n    display: none;\n  }\n  .md-1 {\n    width: 7.833%;\n  }\n  .md-2 {\n    width: 16.166%;\n  }\n  .md-3 {\n    width: 24.5%;\n  }\n  .md-4 {\n    width: 32.833%;\n  }\n  .md-5 {\n    width: 41.166%;\n  }\n  .md-5_5 {\n    width: 45.333%;\n  }\n  .md-6 {\n    width: 49.5%;\n  }\n  .md-7 {\n    width: 57.833%;\n  }\n  .md-8 {\n    width: 66.166%;\n  }\n  .md-9 {\n    width: 74.5%;\n  }\n  .md-10 {\n    width: 82.833%;\n  }\n  .md-11 {\n    width: 91.166%;\n  }\n  .md-12 {\n    width: 100%;\n  }\n  .md-column {\n    display: flex;\n    flex-direction: column;\n  }\n  .md-row {\n    display: flex;\n    flex-direction: row;\n  }\n}\n@media (min-width: 993px) and (max-width: 1200px) {\n  .lg-0 {\n    display: none;\n  }\n  .lg-1 {\n    width: 7.833%;\n  }\n  .lg-2 {\n    width: 16.166%;\n  }\n  .lg-3 {\n    width: 24.5%;\n  }\n  .lg-4 {\n    width: 32.833%;\n  }\n  .lg-5 {\n    width: 41.166%;\n  }\n  .lg-5_5 {\n    width: 45.333%;\n  }\n  .lg-6 {\n    width: 49.5%;\n  }\n  .lg-7 {\n    width: 57.833%;\n  }\n  .lg-8 {\n    width: 66.166%;\n  }\n  .lg-9 {\n    width: 74.5%;\n  }\n  .lg-10 {\n    width: 82.833%;\n  }\n  .lg-11 {\n    width: 91.166%;\n  }\n  .lg-12 {\n    width: 100%;\n  }\n  .lg-column {\n    display: flex;\n    flex-direction: column;\n  }\n  .lg-row {\n    display: flex;\n    flex-direction: row;\n  }\n}\n@media (min-width: 1201px) {\n  .xl-0 {\n    display: none;\n  }\n  .xl-1 {\n    width: 7.833%;\n  }\n  .xl-2 {\n    width: 16.166%;\n  }\n  .xl-3 {\n    width: 24.5%;\n  }\n  .xl-4 {\n    width: 32.833%;\n  }\n  .xl-5 {\n    width: 41.166%;\n  }\n  .xl-5_5 {\n    width: 45.333%;\n  }\n  .xl-6 {\n    width: 49.5%;\n  }\n  .xl-7 {\n    width: 57.833%;\n  }\n  .xl-8 {\n    width: 66.166%;\n  }\n  .xl-9 {\n    width: 74.5%;\n  }\n  .xl-10 {\n    width: 82.833%;\n  }\n  .xl-11 {\n    width: 91.166%;\n  }\n  .xl-12 {\n    width: 100%;\n  }\n  .xl-column {\n    display: flex;\n    flex-direction: column;\n  }\n  .xl-row {\n    display: flex;\n    flex-direction: row;\n  }\n}\n.max-480 {\n  width: 100%;\n  max-width: 480px;\n}\n.max-768 {\n  width: 100%;\n  max-width: 768px;\n}\n.max-992 {\n  width: 100%;\n  max-width: 992px;\n}\n.max-1200 {\n  width: 100%;\n  max-width: 1200px;\n}\n.Repo {\n  display: flex;\n  flex-direction: column;\n  align-items: flex-start;\n  justify-content: flex-start;\n  width: 95%;\n  max-width: 768px;\n  background: #fff;\n  margin-top: 25px;\n  padding-top: 20px;\n  padding-bottom: 25px;\n}\n.Repo .names {\n  display: flex;\n  flex-direction: row;\n  justify-content: flex-start;\n  align-items: center;\n  flex-wrap: wrap;\n  margin-left: 20px;\n}\n.Repo .names p {\n  font-weight: 500;\n  letter-spacing: 2px;\n  padding: 5px 10px;\n  font-size: 1.6rem;\n  background: #9370db;\n  text-transform: uppercase;\n  color: #fff;\n  box-shadow: 0 2px 0 #483d8b;\n  border-radius: 4px;\n  margin-bottom: 10px;\n}\n.Repo .names p:first-of-type {\n  margin-right: 10px;\n}\n.Repo .watch-date {\n  margin-left: 20px;\n  display: flex;\n  flex-direction: column;\n  align-items: flex-start;\n  justify-content: flex-start;\n}\n.Repo .watch-date p {\n  font-weight: 700;\n  letter-spacing: 2px;\n  padding: 5px 10px;\n  font-size: 1.2rem;\n  background: #43f79d;\n  text-transform: uppercase;\n  color: #fff;\n  box-shadow: 0 2px 0 #38d184;\n  border-radius: 4px;\n  margin-bottom: 10px;\n}\n.Repo .scroll-advice {\n  font-weight: 300;\n  margin-left: auto;\n  margin-right: auto;\n  margin-top: 25px;\n  font-size: 1.4rem;\n}\n@media screen and (min-width: 480px) and (max-width: 1999px) {\n  .Repo .scroll-advice {\n    display: none;\n  }\n}\n.Repo .chart {\n  width: 100%;\n  overflow-x: scroll;\n  display: flex;\n  flex-direction: column;\n  align-items: flex-start;\n  justify-content: center;\n  padding-bottom: 15px;\n}\n.Repo .chart .recharts-default-tooltip {\n  display: flex;\n  flex-direction: column;\n  align-items: flex-start;\n  justify-content: center;\n}\n.Repo .chart .recharts-legend-wrapper {\n  bottom: 0px !important;\n}\n", ""]);
 
 	// exports
 

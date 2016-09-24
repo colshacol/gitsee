@@ -84,6 +84,7 @@ function addRepo(req, res, next) {
 
         console.log(`Creating new DB entry for ${fullname}.`)
         db.repos.save({
+            githubID: body.id,
             repo: fullname,
             owner: username,
             reponame: reponame,
@@ -95,13 +96,15 @@ function addRepo(req, res, next) {
             ownerName: owner.login,
             ownerAvatar: owner.avatar_url,
             ownerRepos: owner.repos_url,
+            description: body.description,
             history: [
               {
                 date: nowDate,
                 stars: body.stargazers_count,
                 watchers: body.subscribers_count,
                 forks: body.forks_count,
-                issues: body.open_issues_count
+                issues: body.open_issues_count,
+                size: body.size
               }
             ]
           }, (fail, pass) => {

@@ -48,6 +48,7 @@ class AppWindow extends Component {
 													reponame={repo.reponame}
 													dateAdded={repo.dateAdded}
 													history={repo.history}
+													description={repo.description}
 												/>
 					})
 
