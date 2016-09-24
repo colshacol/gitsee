@@ -6,7 +6,7 @@ export default class Repo extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      mainChartActive: false
+      mainChartActive: true
     }
   }
 

@@ -32670,7 +32670,7 @@
 	    };
 
 	    _this.state = {
-	      mainChartActive: false
+	      mainChartActive: true
 	    };
 	    return _this;
 	  }
