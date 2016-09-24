@@ -29671,15 +29671,23 @@
 									_react2.default.createElement(
 										'button',
 										{ onClick: this.goToSearchBar },
-										'Search Repos'
+										_react2.default.createElement(
+											'p',
+											null,
+											'Search Repos'
+										)
 									),
 									_react2.default.createElement(
-										'button',
-										null,
+										_reactRouter.Link,
+										{ to: '/add' },
 										_react2.default.createElement(
-											_reactRouter.Link,
-											{ to: '/add' },
-											'Add a Repo'
+											'button',
+											null,
+											_react2.default.createElement(
+												'p',
+												null,
+												'Add a Repo'
+											)
 										)
 									)
 								),
@@ -29689,33 +29697,49 @@
 									_react2.default.createElement(
 										'button',
 										{ onClick: this.goToLogin, disabled: true },
-										'Login'
+										_react2.default.createElement(
+											'p',
+											null,
+											'Login'
+										)
 									),
 									_react2.default.createElement(
 										'button',
 										{ onClick: this.goToRegister, disabled: true },
-										'Register'
+										_react2.default.createElement(
+											'p',
+											null,
+											'Register'
+										)
 									)
 								),
 								_react2.default.createElement(
 									'div',
 									{ className: 'button-holder' },
 									_react2.default.createElement(
-										'button',
-										null,
+										'a',
+										{ href: 'https://github.com/colshacol/gitsee/tree/dev' },
 										_react2.default.createElement(
-											'a',
-											{ href: 'https://github.com/colshacol/gitsee/tree/dev' },
-											'Contribute'
+											'button',
+											null,
+											_react2.default.createElement(
+												'p',
+												null,
+												'Contribute'
+											)
 										)
 									),
 									_react2.default.createElement(
-										'button',
-										null,
+										'a',
+										{ href: 'https://twitter.com/colshacol' },
 										_react2.default.createElement(
-											'a',
-											{ href: 'https://twitter.com/colshacol' },
-											'Follow Me'
+											'button',
+											null,
+											_react2.default.createElement(
+												'p',
+												null,
+												'Follow Me'
+											)
 										)
 									)
 								)

@@ -41,16 +41,34 @@ export default class Home extends Component {
 						</p>
 						<div>
 							<div className="button-holder">
-								<button onClick={this.goToSearchBar}>Search Repos</button>
-								<button><Link to="/add">Add a Repo</Link></button>
+								<button onClick={this.goToSearchBar}>
+									<p>Search Repos</p>
+								</button>
+								<Link to="/add">
+									<button>
+										<p>Add a Repo</p>
+									</button>
+								</Link>
 							</div>
 							<div className="button-holder">
-								<button onClick={this.goToLogin} disabled>Login</button>
-								<button onClick={this.goToRegister} disabled>Register</button>
+								<button onClick={this.goToLogin} disabled>
+									<p>Login</p>
+								</button>
+								<button onClick={this.goToRegister} disabled>
+									<p>Register</p>
+								</button>
 							</div>
 							<div className="button-holder">
-								<button><a href="https://github.com/colshacol/gitsee/tree/dev">Contribute</a></button>
-								<button><a href="https://twitter.com/colshacol">Follow Me</a></button>
+								<a href="https://github.com/colshacol/gitsee/tree/dev">
+									<button>
+										<p>Contribute</p>
+									</button>
+								</a>
+								<a href="https://twitter.com/colshacol">
+									<button>
+										<p>Follow Me</p>
+									</button>
+								</a>
 							</div>
 						</div>
 					</div>
