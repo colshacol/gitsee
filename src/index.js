@@ -93,9 +93,9 @@ class AppWindow extends Component {
 			<div className="AppWindow view">
 				<nav>
 					<div>
-						<p className="logo" onClick={this.goToHome}>GIT<span>SEE</span></p>
+						<p className="logo clickable" onClick={this.goToHome}>GIT<span>SEE</span></p>
 						<input onKeyUp={this.fetchRepoByKeypress} className={this.state.searchAlert} id="search-bar" placeholder={this.state.searchPlaceholder}/>
-						<img onClick={this.fetchRepoByClick} src="images/search.svg" />
+						<img onClick={this.fetchRepoByClick} src="images/search.svg" className="clickable"/>
 					</div>
 				</nav>
 				{childrenWithProps}

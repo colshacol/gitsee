@@ -76,6 +76,10 @@ ul li {
 a {
   text-decoration: none;
   color: #9370db;
+
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 :visited {
@@ -149,7 +153,9 @@ strong {
   font-weight: 700;
 }
 
-
+.clickable {
+  cursor: pointer;
+}
 
 button
   font-weight 500
@@ -165,6 +171,9 @@ button
 
   &:disabled
     opacity 0.75
+
+  &:hover
+    cursor: pointer;
 
   a
     color white
