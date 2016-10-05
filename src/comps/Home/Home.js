@@ -11,7 +11,7 @@ export default class Home extends Component {
 
 	// When user clicks "search repos" button, focus on #search-bar and
 	// alert user by state deiven styles. (Search bar pop/flash.)
-	goToSearchBar = (e) => {
+	focusSearchBar = (e) => {
 		const searchBar = document.getElementById('search-bar')
 		searchBar.focus()
 		searchBar.classList.add('look-at-me')
@@ -38,7 +38,7 @@ export default class Home extends Component {
 						</p>
 						<div>
 							<div className="button-holder">
-								<button onClick={this.goToSearchBar}>
+								<button onClick={this.focusSearchBar}>
 									<p>Search Repos</p>
 								</button>
 								<Link to="/add">
