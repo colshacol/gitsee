@@ -1,5 +1,15 @@
 {
-  "components" : "./src/comps",
-  "templatePath" : "./src/comps",
-  "css" : "styl"
+  "templates": {
+    "comp": {
+      "path": "./src/comps/TEMP/",
+      "output": "./src/comps"
+    },
+    "temp": {
+      "path": "./src/TEMPS/"
+    }
+  },
+
+  "variables": {
+    "$CSS" : "styl"
+  }
 }

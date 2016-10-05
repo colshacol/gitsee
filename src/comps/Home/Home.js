@@ -5,9 +5,6 @@ import './Home.styl'
 import userStore from '../../stores/UserStore'
 
 export default class Home extends Component {
-	constructor(props) {
-		super(props)
-	}
 
 	// Focus the #search-bar when the view loads.
 	componentDidMount = () => document.getElementById('search-bar').focus()

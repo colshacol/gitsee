@@ -1,5 +1,5 @@
 {
-  "name": "nusync_server",
+  "name": "gitsee",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -45,6 +45,7 @@
     "stylus-loader": "^2.2.0",
     "twilio": "^2.9.3",
     "webpack": "^1.13.1",
-    "webpack-dev-server": "^1.14.1"
+    "webpack-dev-server": "^1.14.1",
+    "write": "^0.3.2"
   }
 }

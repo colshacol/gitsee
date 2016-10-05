@@ -1,15 +1,11 @@
-import { autorun, observable } from 'mobx'
+import { observable } from 'mobx'
 
 class UserStore {
-  @observable loggedIn = false;
+  @observable loggedIn = false
   @observable userData = {}
+  @observable userName = 'timmy'
 }
 
 const userStore = window.userStore = new UserStore
 
 export default userStore
-
-autorun(() => {
-  // console.log(userStore.loggedIn)
-  // console.log(userStore.userData)
-})
