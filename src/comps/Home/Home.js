@@ -56,7 +56,7 @@ export default class Home extends Component {
 								</button>
 							</div>
 							<div className="button-holder">
-								<a href="https://github.com/colshacol/gitsee/tree/dev">
+								<a href="https://github.com/colshacol/gitsee">
 									<button>
 										<p>Contribute</p>
 									</button>
