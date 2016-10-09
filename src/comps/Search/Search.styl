@@ -4,3 +4,38 @@
 
 .Search
   background SMOKE
+  padding-bottom: 75px;
+
+
+.Search input[name="add repo"] {
+  width 300px
+  height 35px
+  background white
+  margin-top 15px
+  margin-left 10px
+  margin-right 10px
+  padding 5px 10px
+  border-radius 4px
+  font-weight 400
+  font-size 1.4rem
+  letter-spacing 1px
+  color PURPLE1
+  font-family OPEN
+  transition all .35s
+
+  &.look-at-me {
+    background PURPLE1
+    transform scale(1.1)
+    color white
+    &::-webkit-input-placeholder {
+      color white
+    }
+  }
+
+  &.no-repo-found {
+    transform scale(1.1)
+    &::-webkit-input-placeholder {
+      color white
+    }
+  }
+}

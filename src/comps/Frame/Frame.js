@@ -22,8 +22,8 @@ import userStore from '../..//stores/UserStore'
 	fetchRepoByClick = (e) => {
 		const searchBar = document.getElementById('search-bar')
 		let input = searchBar.value.replace(/\s+/g, '')
-    input = input.split('/')
-    browserHistory.push(`/search/${input[0]}/${input[1]}`)
+    	input = input.split('/')
+    	browserHistory.push(`/search/${input[0]}/${input[1]}`)
 	}
 
 	goToHome = () => {

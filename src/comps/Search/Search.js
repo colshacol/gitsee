@@ -16,6 +16,39 @@ import './Search.styl'
   @observable repoName = this.props.params.repo
   @observable status = 'Searching for '
   @observable repoData = <Repo />
+  @observable additionalRepos = []
+
+  addAnotherRepo = (e) => {
+    if (e.which !== 13) return
+
+    const searchBar = document.getElementById('add-repo')
+		let input = searchBar.value.replace(/\s+/g, '')
+    input = input.split('/')
+    const owner = input[0].toLowerCase()
+    const repo = input[1].toLowerCase()
+    axios.get(`/repos/${owner}/${repo}`)
+			.then((res) => {
+        if (!res.data[0]) {
+          this.repoData = {status: 'No results.'}
+          return;
+        }
+				const result = res.data[0]
+        this.additionalRepos.push(
+          <Repo
+            owner={result.owner}
+            repoName={result.reponame}
+            dateAdded={result.dateAdded}
+            history={result.history}
+            description={result.description}
+            key={this.additionalRepos.length}
+          />
+        )
+			})
+			.catch((err) => {
+        console.log(err);
+				this.status = 'Repo not found in our databse.'
+			})
+  }
 
   renderRepoData = () => {
     const { owner, repo } = this.props.params
@@ -67,6 +100,8 @@ import './Search.styl'
           history={this.repoData.history}
           description={this.repoData.description}
         />
+        {this.additionalRepos}
+        <input id="add-repo" onKeyPress={this.addAnotherRepo} name="add repo" placeholder="add repo to compare"/>
       </div>
     )
   }
