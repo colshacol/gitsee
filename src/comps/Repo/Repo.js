@@ -8,9 +8,13 @@ import './Repo.styl'
   @observable relativeChart = true
   @observable status = `Searching.`
   @observable repoHistory = this.props.history
+  @observable showWatchersAndForks = false
 
   // switch chart from absolute view to relative view.
   switchChart = () => { this.relativeChart = !this.relativeChart }
+  toggleWatchersAndForks = () => {
+    this.showWatchersAndForks = !this.showWatchersAndForks
+  }
 
   render() {
     // if no valid repo was passed into the component,
@@ -42,32 +46,49 @@ import './Repo.styl'
           this.props.history[i].stars
         )
 
-        watchers.push(
-          this.props.history[i + 1].watchers -
-          this.props.history[i].watchers
-        )
+        if (this.showWatchersAndForks) {
+          watchers.push(
+            this.props.history[i + 1].watchers -
+            this.props.history[i].watchers
+          )
 
-        forks.push(
-          this.props.history[i + 1].forks -
-          this.props.history[i].forks
-        )
+          forks.push(
+            this.props.history[i + 1].forks -
+            this.props.history[i].forks
+          )
+        }
       }
 
       if (!this.relativeChart) {
-        chart.push({
-          date: this.props.history[i].date,
-          stars: this.props.history[i].stars,
-          watchers: this.props.history[i].watchers,
-          forks: this.props.history[i].forks,
-        })
+        const chartEntry = (this.showWatchersAndForks) ?
+          {
+            date: this.props.history[i].date,
+            stars: this.props.history[i].stars,
+            watchers: this.props.history[i].watchers,
+            forks: this.props.history[i].forks,
+          }
+        :
+          {
+            date: this.props.history[i].date,
+            stars: this.props.history[i].stars
+          }
+        
+        chart.push(chartEntry)
       } else {
         if (i !== historyLen - 1) {
-          chart.push({
-            date: this.props.history[i].date,
-            stars: stars[x - 1],
-            watchers: watchers[x - 1],
-            forks: forks[x - 1],
-          })
+          const chartEntry = (this.showWatchersAndForks) ?
+            {
+              date: this.props.history[i].date,
+              stars: stars[x - 1],
+              watchers: watchers[x - 1],
+              forks: forks[x - 1]
+            }
+          :
+            {
+              date: this.props.history[i].date,
+              stars: stars[x - 1]
+            }      
+          chart.push(chartEntry)
         }
       }
 
@@ -80,6 +101,7 @@ import './Repo.styl'
 
     const starsAverage = Math.floor(starsTotal / stars.length)
     const otherView = (this.relativeChart) ? 'absolute' : 'relative'
+    const chartHeight = (this.showWatchersAndForks) ? 275 : 200
     return (
       <div className="Repo component">
         <div className="names">
@@ -89,13 +111,14 @@ import './Repo.styl'
         <div className="watch-date">
           <p>watching since {this.props.dateAdded}</p>
           <p className="clickable" onClick={this.switchChart}>Switch to {otherView} view</p>
+          <p className="clickable" onClick={this.toggleWatchersAndForks}>Toggle Watchers/Forks</p>
         </div>
         <div className="description">
           <p>{this.props.description}</p>
         </div>
         <p className="scroll-advice">Scroll right to travel back in time!</p>
         <div className="chart">
-          <LineChart data={chart} width={745} height={275}
+          <LineChart data={chart} width={745} height={chartHeight}
              margin={{top: 30, right: 70, left: 30, bottom: 20}}>
             <XAxis dataKey="date"/>
             <YAxis />
