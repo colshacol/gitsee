@@ -21,18 +21,11 @@ app.use(express.static(`public`))
 
 app.use(static)
 app.use('/', index)
-
 app.use('/repos', repos)
 app.use('/status', status)
 app.use('/users', users)
 app.use('/search', search)
 app.use('*', index)
-
-// app.use(function(req, res, next) {
-//   var err = new Error('Not Found')
-//   err.status = 404;
-//   next(err)
-// });
 
 function static(req, res, next) {
   if (req.url.match(/((scripts|styles|images|assets)\/\w*\.(svg|js|html|css|png|jpg|jpeg))/)) {

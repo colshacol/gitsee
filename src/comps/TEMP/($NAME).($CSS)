@@ -2,6 +2,6 @@
 @import '../../styles/grid'
 @import '../../styles/mixins'
 
-.$NAME {
+.($NAME) {
 
 }

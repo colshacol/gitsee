@@ -3,9 +3,6 @@
     "comp": {
       "path": "./src/comps/TEMP/",
       "output": "./src/comps"
-    },
-    "temp": {
-      "path": "./src/TEMPS/"
     }
   },
 

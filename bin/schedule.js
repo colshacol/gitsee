@@ -9,9 +9,9 @@ const db = mongo(`mongodb://gitsee:MarleyMC__14@ds019746.mlab.com:19746/gitsee`,
 // for production: run blast every 24 hours.
 const rule = new schedule.RecurrenceRule()
 rule.dayOfWeek = [0,1,2,3,4,5,6]
-rule.hour = 5;
-rule.minute = 8;
-rule.second = 30;
+rule.hour = 18;
+rule.minute = 13;
+rule.second = 50;
 
 const blast = () => {
   // Create the function that will fire at the specified time.
@@ -29,12 +29,13 @@ const blast = () => {
 
         console.log(`\n${fullname} history updating...`);
 
-        const date = new Date()
-        const day = date.getDate()
-        const month = date.getMonth() + 1;
-        const year = date.getFullYear()
-        const nowDate = `${month}/${day}/${year}`;
-        const time = Date.now()
+        const
+          date = new Date(),
+          day = date.getDate(),
+          month = date.getMonth() + 1,
+          year = date.getFullYear(),
+          nowDate = `${month}/${day}/${year}`,
+          time = Date.now()
 
         // Query GitHub to get current repo stats.
         github.get(`/repos/${fullname}`, (err, status, body, headers) => {
