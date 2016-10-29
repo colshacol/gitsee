@@ -31645,15 +31645,9 @@
 				args[_key] = arguments[_key];
 			}
 
-			return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Frame.__proto__ || Object.getPrototypeOf(Frame)).call.apply(_ref, [this].concat(args))), _this), _initDefineProp(_this, 'searchAlert', _descriptor, _this), _this.fetchRepoByKeypress = function (e) {
-				if (e.which === 13) {
-					e.preventDefault();
-					_this.fetchRepoByClick();
-				}
-			}, _this.fetchRepoByClick = function (e) {
-				var searchBar = document.getElementById('search-bar');
-				var input = searchBar.value.replace(/\s+/g, '');
-				input = input.split('/');
+			return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Frame.__proto__ || Object.getPrototypeOf(Frame)).call.apply(_ref, [this].concat(args))), _this), _initDefineProp(_this, 'searchAlert', _descriptor, _this), _this.fetchRepo = function (e) {
+				if (e.type === 'keyup' && e.which != 13) return;
+				var input = repoSearch.value.replace(/\s+/g, '').split('/');
 				_reactRouter.browserHistory.push('/search/' + input[0] + '/' + input[1]);
 			}, _this.goToHome = function () {
 				if (_UserStore2.default.loggedIn) {
@@ -31678,7 +31672,9 @@
 							null,
 							_react2.default.createElement(
 								'p',
-								{ className: 'logo clickable', onClick: this.goToHome },
+								{
+									className: 'logo clickable',
+									onClick: this.goToHome },
 								'GIT',
 								_react2.default.createElement(
 									'span',
@@ -31686,8 +31682,17 @@
 									'SEE'
 								)
 							),
-							_react2.default.createElement('input', { onKeyUp: this.fetchRepoByKeypress, className: this.searchAlert, id: 'search-bar', placeholder: 'search by user/repo' }),
-							_react2.default.createElement('img', { onClick: this.fetchRepoByClick, src: 'images/search.svg', className: 'clickable' })
+							_react2.default.createElement('input', {
+								onKeyUp: this.fetchRepo,
+								className: this.searchAlert,
+								id: 'repoSearch',
+								placeholder: 'search by user/repo'
+							}),
+							_react2.default.createElement('img', {
+								onClick: this.fetchRepo,
+								src: 'images/search.svg',
+								className: 'clickable'
+							})
 						)
 					),
 					this.props.children

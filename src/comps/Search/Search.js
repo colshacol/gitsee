@@ -8,7 +8,6 @@ import Repo from '../Repo/Repo'
 
 import './Search.styl'
 
-
 @observer
 export default class Search extends Component {
   @observable params = this.props.params
@@ -52,7 +51,7 @@ export default class Search extends Component {
     axios.get(`/repos/${owner.toLowerCase()}/${repo.toLowerCase()}`)
 			.then(res => {
         const result = res.data[0]
-        
+
         if (!result) return this.repoData = {status: 'No results.'}
 
         this.status = 'Found repo.'
