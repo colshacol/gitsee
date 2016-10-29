@@ -32126,7 +32126,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _class, _desc, _value, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5;
+	var _class, _desc, _value, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6;
 
 	var _react = __webpack_require__(1);
 
@@ -32213,20 +32213,20 @@
 	      args[_key] = arguments[_key];
 	    }
 
-	    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Search.__proto__ || Object.getPrototypeOf(Search)).call.apply(_ref, [this].concat(args))), _this), _initDefineProp(_this, 'repoOwner', _descriptor, _this), _initDefineProp(_this, 'repoName', _descriptor2, _this), _initDefineProp(_this, 'status', _descriptor3, _this), _initDefineProp(_this, 'repoData', _descriptor4, _this), _initDefineProp(_this, 'additionalRepos', _descriptor5, _this), _this.addAnotherRepo = function (e) {
+	    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Search.__proto__ || Object.getPrototypeOf(Search)).call.apply(_ref, [this].concat(args))), _this), _initDefineProp(_this, 'params', _descriptor, _this), _initDefineProp(_this, 'repoOwner', _descriptor2, _this), _initDefineProp(_this, 'repoName', _descriptor3, _this), _initDefineProp(_this, 'status', _descriptor4, _this), _initDefineProp(_this, 'repoData', _descriptor5, _this), _initDefineProp(_this, 'additionalRepos', _descriptor6, _this), _this.addAnotherRepo = function (e) {
 	      if (e.which !== 13) return;
 
-	      var searchBar = document.getElementById('add-repo');
-	      var input = searchBar.value.replace(/\s+/g, '');
-	      input = input.split('/');
+	      var input = addRepoInput.value.replace(/\s+/g, '').split('/');
 	      var owner = input[0].toLowerCase();
 	      var repo = input[1].toLowerCase();
+
+
 	      _axios2.default.get('/repos/' + owner + '/' + repo).then(function (res) {
-	        if (!res.data[0]) {
-	          _this.repoData = { status: 'No results.' };
-	          return;
-	        }
 	        var result = res.data[0];
+
+	        // FIX: Alters original repo chart. No bueno, hermano!
+	        if (!result) return _this.repoData = { status: 'No results.' };
+
 	        _this.additionalRepos.push(_react2.default.createElement(_Repo2.default, {
 	          owner: result.owner,
 	          repoName: result.reponame,
@@ -32236,21 +32236,19 @@
 	          key: _this.additionalRepos.length
 	        }));
 	      }).catch(function (err) {
-	        console.log(err);
-	        _this.status = 'Repo not found in our databse.';
+	        return _this.status = 'Repo not found in our databse.';
 	      });
 	    }, _this.renderRepoData = function () {
 	      var _this$props$params = _this.props.params;
 	      var owner = _this$props$params.owner;
 	      var repo = _this$props$params.repo;
-	      // console.log('Request: ' + owner.toLowerCase() + '/' + repo.toLowerCase())
+
 
 	      _axios2.default.get('/repos/' + owner.toLowerCase() + '/' + repo.toLowerCase()).then(function (res) {
-	        if (!res.data[0]) {
-	          _this.repoData = { status: 'No results.' };
-	          return;
-	        }
 	        var result = res.data[0];
+
+	        if (!result) return _this.repoData = { status: 'No results.' };
+
 	        _this.status = 'Found repo.';
 	        _this.repoData = {
 	          owner: result.owner,
@@ -32260,8 +32258,7 @@
 	          description: result.description
 	        };
 	      }).catch(function (err) {
-	        console.log(err);
-	        _this.status = 'Repo not found in our databse.';
+	        return _this.status = 'Repo not found in our databse.';
 	      });
 	    }, _temp), _possibleConstructorReturn(_this, _ret);
 	  }
@@ -32274,7 +32271,10 @@
 	  }, {
 	    key: 'componentDidUpdate',
 	    value: function componentDidUpdate() {
-	      if (this.props.params.owner !== this.repoOwner || this.props.params.repo !== this.repoName) {
+	      var ownerChanged = this.props.params.owner !== this.repoOwner,
+	          repoChanged = this.props.params.repo !== this.repoName;
+
+	      if (ownerChanged || repoChanged) {
 	        this.repoOwner = this.props.params.owner;
 	        this.repoName = this.props.params.repo;
 	        this.renderRepoData();
@@ -32283,11 +32283,9 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var content = this.repo ? this.repo : 'ananana';
-	      console.log(this.repoOwner, this.repoName);
 	      return _react2.default.createElement(
 	        'div',
-	        { className: 'Search view' },
+	        { className: 'search view' },
 	        _react2.default.createElement(_Repo2.default, {
 	          status: this.repoData.status,
 	          owner: this.repoData.owner,
@@ -32297,33 +32295,43 @@
 	          description: this.repoData.description
 	        }),
 	        this.additionalRepos,
-	        _react2.default.createElement('input', { id: 'add-repo', onKeyPress: this.addAnotherRepo, name: 'add repo', placeholder: 'add repo to compare' })
+	        _react2.default.createElement('input', {
+	          id: 'addRepoInput',
+	          onKeyPress: this.addAnotherRepo,
+	          placeholder: 'add user/repo',
+	          name: 'add repo'
+	        })
 	      );
 	    }
 	  }]);
 
 	  return Search;
-	}(_react.Component), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, 'repoOwner', [_mobx.observable], {
+	}(_react.Component), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, 'params', [_mobx.observable], {
+	  enumerable: true,
+	  initializer: function initializer() {
+	    return this.props.params;
+	  }
+	}), _descriptor2 = _applyDecoratedDescriptor(_class2.prototype, 'repoOwner', [_mobx.observable], {
 	  enumerable: true,
 	  initializer: function initializer() {
 	    return this.props.params.owner;
 	  }
-	}), _descriptor2 = _applyDecoratedDescriptor(_class2.prototype, 'repoName', [_mobx.observable], {
+	}), _descriptor3 = _applyDecoratedDescriptor(_class2.prototype, 'repoName', [_mobx.observable], {
 	  enumerable: true,
 	  initializer: function initializer() {
 	    return this.props.params.repo;
 	  }
-	}), _descriptor3 = _applyDecoratedDescriptor(_class2.prototype, 'status', [_mobx.observable], {
+	}), _descriptor4 = _applyDecoratedDescriptor(_class2.prototype, 'status', [_mobx.observable], {
 	  enumerable: true,
 	  initializer: function initializer() {
 	    return 'Searching for ';
 	  }
-	}), _descriptor4 = _applyDecoratedDescriptor(_class2.prototype, 'repoData', [_mobx.observable], {
+	}), _descriptor5 = _applyDecoratedDescriptor(_class2.prototype, 'repoData', [_mobx.observable], {
 	  enumerable: true,
 	  initializer: function initializer() {
 	    return _react2.default.createElement(_Repo2.default, null);
 	  }
-	}), _descriptor5 = _applyDecoratedDescriptor(_class2.prototype, 'additionalRepos', [_mobx.observable], {
+	}), _descriptor6 = _applyDecoratedDescriptor(_class2.prototype, 'additionalRepos', [_mobx.observable], {
 	  enumerable: true,
 	  initializer: function initializer() {
 	    return [];

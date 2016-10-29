@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import { Link, browserHistory } from 'react-router'
-
 import axios from 'axios'
-
 import { observable } from 'mobx'
 import { observer } from 'mobx-react'
 
@@ -11,7 +9,9 @@ import Repo from '../Repo/Repo'
 import './Search.styl'
 
 
-@observer export default class Search extends Component {
+@observer
+export default class Search extends Component {
+  @observable params = this.props.params
   @observable repoOwner = this.props.params.owner
   @observable repoName = this.props.params.repo
   @observable status = 'Searching for '
@@ -21,18 +21,17 @@ import './Search.styl'
   addAnotherRepo = (e) => {
     if (e.which !== 13) return
 
-    const searchBar = document.getElementById('add-repo')
-		let input = searchBar.value.replace(/\s+/g, '')
-    input = input.split('/')
-    const owner = input[0].toLowerCase()
-    const repo = input[1].toLowerCase()
+    const
+		  input = addRepoInput.value.replace(/\s+/g, '').split('/'),
+      [owner, repo] = [input[0].toLowerCase(), input[1].toLowerCase()]
+
     axios.get(`/repos/${owner}/${repo}`)
-			.then((res) => {
-        if (!res.data[0]) {
-          this.repoData = {status: 'No results.'}
-          return;
-        }
-				const result = res.data[0]
+			.then(res => {
+        const result = res.data[0]
+
+        // FIX: Alters original repo chart. No bueno, hermano!
+        if (!result) return this.repoData = { status: 'No results.' }
+
         this.additionalRepos.push(
           <Repo
             owner={result.owner}
@@ -44,22 +43,18 @@ import './Search.styl'
           />
         )
 			})
-			.catch((err) => {
-        console.log(err);
-				this.status = 'Repo not found in our databse.'
-			})
+			.catch((err) => this.status = 'Repo not found in our databse.')
   }
 
   renderRepoData = () => {
     const { owner, repo } = this.props.params
-    // console.log('Request: ' + owner.toLowerCase() + '/' + repo.toLowerCase())
+
     axios.get(`/repos/${owner.toLowerCase()}/${repo.toLowerCase()}`)
-			.then((res) => {
-        if (!res.data[0]) {
-          this.repoData = {status: 'No results.'}
-          return;
-        }
-				const result = res.data[0]
+			.then(res => {
+        const result = res.data[0]
+        
+        if (!result) return this.repoData = {status: 'No results.'}
+
         this.status = 'Found repo.'
         this.repoData = {
           owner: result.owner,
@@ -69,10 +64,7 @@ import './Search.styl'
           description: result.description
         }
 			})
-			.catch((err) => {
-        console.log(err);
-				this.status = 'Repo not found in our databse.'
-			})
+			.catch(err => this.status = 'Repo not found in our databse.')
   }
 
   componentWillMount() {
@@ -80,7 +72,11 @@ import './Search.styl'
   }
 
   componentDidUpdate() {
-    if (this.props.params.owner !== this.repoOwner || this.props.params.repo !== this.repoName) {
+    const
+      ownerChanged = this.props.params.owner !== this.repoOwner,
+      repoChanged = this.props.params.repo !== this.repoName
+
+    if (ownerChanged || repoChanged) {
       this.repoOwner = this.props.params.owner
       this.repoName = this.props.params.repo
       this.renderRepoData()
@@ -88,10 +84,8 @@ import './Search.styl'
   }
 
   render() {
-    const content = (this.repo) ? this.repo : 'ananana'
-    console.log(this.repoOwner, this.repoName);
     return (
-      <div className="Search view">
+      <div className="search view">
         <Repo
           status={this.repoData.status}
           owner={this.repoData.owner}
@@ -101,7 +95,12 @@ import './Search.styl'
           description={this.repoData.description}
         />
         {this.additionalRepos}
-        <input id="add-repo" onKeyPress={this.addAnotherRepo} name="add repo" placeholder="add repo to compare"/>
+        <input
+          id="addRepoInput"
+          onKeyPress={this.addAnotherRepo}
+          placeholder="add user/repo"
+          name="add repo"
+        />
       </div>
     )
   }

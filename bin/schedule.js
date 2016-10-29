@@ -3,11 +3,13 @@
 const
   schedule = require('node-schedule'),
   octonode = require('octonode'),
+  mongo = require('mongojs')
+
+const
   github = octonode.client({id: 'a5a51f984' + 'c89b000260f', secret: '20e6d94a258db' + '36178f7615a574' + 'c873ef9b4a4de'}),
-  mongo = require('mongojs'),
   db = mongo(`mongodb://gitsee:MarleyMC__14@ds019746.mlab.com:19746/gitsee`, ['repos'])
 
-// for production: run blast every 24 hours.
+// For production: run blast every 24 hours.
 const
   rule = new schedule.RecurrenceRule()
   rule.dayOfWeek = [0,1,2,3,4,5,6]
@@ -15,18 +17,15 @@ const
   rule.minute = 13
   rule.second = 50
 
-const blast = () => {
-  // Create the function that will fire at the specified time.
+function blast() {
+  // The function that will fire at the specified time:
   schedule.scheduleJob(rule, () => {
-    console.log('\n\n\n\nblasting\n\n\n\n')
-
-    // Find all repos in the database.
-    db.repos.find((error, repos) => {
-      // For each repo found found...
-      for (let i = 0; i < repos.length; i++) {
-        let repo = repos[i]
-        let fullname = repo.repo
-        let history = repo.history
+    db.repos.find((err, repos) => {
+      for (let i = 0, reposLen = repos.length; i < reposLen; i++) {
+        const
+          repo = repos[i],
+          fullname = repo.repo,
+          history = repo.history
 
         const
           nowDate = new Date(),
@@ -40,6 +39,7 @@ const blast = () => {
         github.get(`/repos/${fullname}`, (err, status, body, headers) => {
           if (err) return console.log('Error querying GitHub.')
 
+          // Append new history entry onto old history array.
           history.push({
             date,
             time,
